@@ -159,6 +159,7 @@
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\CustLightController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\HighlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IMAGEController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerHL.cs" />
     <Compile Include="Models\DAL\DBService.cs" />
+    <Compile Include="Models\Highlight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

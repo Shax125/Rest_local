@@ -27,27 +27,16 @@
     <title>Prefernces</title>
 
 
-
-
-
     <script>
 
 
         function init() { }
 
-
-
-
-
         $(document).ready(function () {
-
-
             if (localStorage["customer_Id"] == null) {
                 alert("In order to see This Page you must Log in first")
                 location.replace("SignIn.html")
             }
-
-
 
             $("#checkIn").change(function () {
 
@@ -56,9 +45,43 @@
                 check($(this).val());
             });
 
+            getHighlights();
+
+            $("#highlightsform").submit(submithighlights());
+
+
         });
+        function getHighlights() {
+            ajaxCall("GET", "/api/Highlight", "", getSuccess, error);
+        }
+
+        function getSuccess(data) {
+            console.log(data);
+
+            str = "";
+
+            for (var i = 0; i < data.length; i++) {
+                str += ' <input type="checkbox" id='+ data[i].Id + 'name="highlights" value=' + data[i].Id + '>';
+                str += ' <label for="highlights"> ' + data[i].HighlightName  + '</label><br><br>';
+            }
+
+            str += '<input type="submit" value="Submit">';
+            $("#highlightsform").append(str);
+
+        }
 
 
+        function error(ex) {
+            console.log(ex);
+        }
+
+        function submithighlights() {
+            console.log(arr);
+
+
+
+
+        }
 
         function check(Box_Value) {
             //here we will get the highlight value he pushed on
@@ -81,7 +104,6 @@
 
 
         }
-
 
         function SendHighlight(CheckTransort) {//in this fuction we will perform POST into the Table "Highlights for customers"
             CustId = JSON.parse(localStorage["customer_Id"])
@@ -158,173 +180,22 @@
                         <div class="text-white">
                             <h1 class="display-4 font-weight-bold fonting">Preferences</h1>
                             <h4 class="font-italic mb-4 fonting">By Adam Uzan&ShayDavid&shirHertzman</h4>
-                            <a style="margin:10px;" class="btn btn-outline-light btn-lg" href="#!" role="button">Resturants</a>
-                            <a style="margin:10px;" class="btn btn-outline-light btn-lg" href="Preferences.html" role="button">Preferences</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <br />
-            <br />
-            <br />
+            <br /><br /><br />
             <!-- Background image -->
         </header>
-
     </section>
-
-
     <!--End of the Main Picture -->
-
-
-
-
-
-
-
     <section id="main_buttons">
-
         <div id="ph1">
-
-            <div class="container">
-                <div class="row" id="mrgdown">
-                    <div class="col">
-
-                        <table style="margin:0px auto">
-                            <tr>
-                                <td>
-                                    <label class="containerBox">
-                                        Cash
-                                        <input id="checkIn" type="checkbox" value="1">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                                <td>
-
-                                    <label class="containerBox">
-                                        Credit Card
-                                        <input id="checkIn" type="checkbox" value="2">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label class="containerBox">
-                                        Luxury Dining
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                                <td>
-
-                                    <label class="containerBox">
-                                        Vegan Options
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label class="containerBox">
-                                        Nightlife
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                                <td>
-
-                                    <label class="containerBox">
-                                        Serves Alcohol
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label class="containerBox">
-                                        Takeaway Available
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                                <td>
-
-                                    <label class="containerBox">
-                                        Table booking recommended
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label class="containerBox">
-                                        Outdoor Seating
-                                        <input type="checkbox" checked="checked">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                                <td>
-
-                                    <label class="containerBox">
-                                        Gluten Free Options
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-
-                                </td>
-
-                            </tr>
-
-
-
-                        </table>
-
-                        <br />
-
-
-                        <div class="centerBTN">
-                            <a href="index.html" role="button" class="btn btn-primary px-5">Back to Restaurants</a> &nbsp; &nbsp;
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                    </div>
-                </div>
-            </div>
-
+            <form id="highlightsform">
+            </form>
 
         </div>
-
     </section>
-
-
-
 </body>
 
 

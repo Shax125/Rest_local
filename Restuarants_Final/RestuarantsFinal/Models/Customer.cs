@@ -18,6 +18,7 @@ namespace RestuarantsFinal.Models
         int range;
         string img;
         
+        
 
 
         public Customer(int id, string fname, string lname, string email, string phone, string pass, int range,  string img)

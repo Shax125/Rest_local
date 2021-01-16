@@ -71,7 +71,48 @@ namespace RestuarantsFinal.Models.DAL
             }
 
         }
+        
+            public List<Highlight> getHighlights()
+        {
+            SqlConnection con = null;
+            List<Highlight> hList = new List<Highlight>();
 
+            try
+            {
+                con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
+
+                String selectSTR = "SELECT * FROM Highlights_2021A_T4"; 
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Highlight h = new Highlight();
+
+                    h.Id = Convert.ToInt32(dr["id"]);
+                    h.HighlightName = (string)dr["highlight"];
+                  
+                    hList.Add(h);
+                }
+
+                return hList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
         public List<Business> getRestaurants(string categoryfromuser)
         {
             SqlConnection con = null;
@@ -281,7 +322,6 @@ namespace RestuarantsFinal.Models.DAL
 
         }
 
-
         private String BuildInsertCommand(Customer bs)
         {
             String command;
@@ -353,7 +393,6 @@ namespace RestuarantsFinal.Models.DAL
             }
 
         }
-
 
         private String BuildInsertCommand(CustomerHL bs)
         {
