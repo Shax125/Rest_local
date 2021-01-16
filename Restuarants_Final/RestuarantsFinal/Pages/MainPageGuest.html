@@ -9,17 +9,43 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   
+
+
     <meta charset="utf-8" />
     <title>GuestMainPage</title>
     <script>
         $(document).ready(function () {
 
 
+            if (localStorage["customer_Id"] == null) {
+               
+                $("#clear").prop("disabled", true);
+                // $("#clear").attr('disabled', 'disabled');
 
+            }
+
+
+            else {
+                $("#clear").prop("disabled", false);
+                //$("input").removeAttr('disabled');
+            }
+
+            $("#clear").click(clearLocal);
 
             $("#search").click(f1);
 
         });
+
+        function clearLocal() {
+            localStorage.clear();
+
+        }
+
         function f1() {
             if (category = $("#category").val() != 0)
                 getr();
@@ -38,20 +64,20 @@
             for (var i = 0; i < data.length; i++) {
 
                 str += "<div class='card' style ='width: 18rem ;'>";
-                str += "<img class='card-img-top' src=" + data[i].Img+" alt='Card image cap'>"
+                str += "<img class='card-img-top' src=" + data[i].Img + " alt='Card image cap'>"
                 str += "<div class='card-body'>"
                 str += "<h3 class='card-title'>" + data[i].Name + "</h3>";
 
                 str += "</div>"
                 str += "<ul class='list-group list-group-flush'>";
-                str += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address+"</li>"
-                str += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone +"</li>"
-                str += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating +"</li>"
-                str += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange +"</li>"
+                str += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                str += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                str += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                str += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
                 str += "</ul>";
                 str += "</div>";
                 str += "</br>";
-                
+
             }
             $("#ph2").append(str);
 
@@ -75,62 +101,83 @@
 </head>
 <body>
 
-    <div class="container">
+    <section>
+        <header>
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="MainPageGuest.html">Restuarants</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="MainPageGuest.html">Restuarants</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">HomePage</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Preferences</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="SignIn.html">SignIn</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">MANAGMENT AREA</a>
-                        </li>
-                    </ul>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="Preferences.html">Preferences</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="SignIn.html">SignIn</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar -->
+            <!-- Background image -->
+            <div class="p-5 text-center bg-image"
+                 style=" background-image: url('https://i.pinimg.com/originals/c2/c6/4b/c2c64b930af48a341c3adef7c659d36e.png'); height: 400px; margin-top: 58px; ">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0); margin-top:100px">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="text-white">
+                            <h1 class="display-4 font-weight-bold fonting">Resturants</h1>
+                            <h4 class="font-italic mb-4 fonting">By Adam Uzan&ShayDavid&shirHertzman</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-        <br />
+            <br /><br /><br />
+            <!-- Background image -->
+        </header>
+    </section>
 
 
 
-        <label>Please Choose Category: </label>
-        <select class="drop" name="cuisine" id="category">
-            <option value="0">---</option>
-            <option value="American">American</option>
-            <option value="Asian">Asian</option>
-            <option value="Italian">Italian</option>
-            <option value="Lebanese">Lebanese</option>
-            <option value="Filipino">Filipino</option>
-            <option value="European">European</option>
-            <option value="Indian">Indian</option>
-        </select>
+    <label>Please Choose Category: </label>
+    <select class="drop" name="cuisine" id="category">
+        <option value="0">---</option>
+        <option value="American">American</option>
+        <option value="Asian">Asian</option>
+        <option value="Italian">Italian</option>
+        <option value="Lebanese">Lebanese</option>
+        <option value="Filipino">Filipino</option>
+        <option value="European">European</option>
+        <option value="Indian">Indian</option>
+    </select>
 
 
-        <button type="button" class="btn btn-secondary" id="search">CLICK</button>
+    <button type="button" class="btn btn-secondary" id="search">CLICK</button>
 
-        <h1>Promoting funded</h1>
-        <div id="ph1">empty</div>
-
-
-        <div>
-            <h1>Organic Promotion</h1>
-            <div id="ph2">
+    <h1>Promoting funded</h1>
+    <div id="ph1">empty</div>
 
 
-            </div>
+    <div>
+        <h1>Organic Promotion</h1>
+        <div id="ph2">
+
+
         </div>
+    </div>
 
     </div>
 

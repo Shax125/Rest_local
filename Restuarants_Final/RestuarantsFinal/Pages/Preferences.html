@@ -12,13 +12,24 @@
     <link href="../Views/Prefernces_StyleSheet.css" rel="stylesheet" />-->
     <script src="../Scripts/ajaxCalls.js"></script>
 
-    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <!--<script src="../Scripts/jquery-3.4.1.js"></script>-->
     <!--<script src="../Scripts/ajaxCallsWithKey.js"></script>-->
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+
+
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -27,13 +38,19 @@
 
     <script>
 
-       
+
 
         $(document).ready(function () {
             if (localStorage["customer_Id"] == null) {
                 alert("In order to see This Page you must Log in first")
                 location.replace("SignIn.html")
             }
+
+            else {
+                $("#clear").prop("disabled", false);
+            }
+
+
 
             $("#checkIn").change(function () {
 
@@ -49,7 +66,21 @@
             });
 
 
+
+
+            $("#clear").click(clearLocal);
         });
+
+        function clearLocal() {
+            localStorage.clear();
+            $("#clear").prop("disabled", true);
+            location.replace("MainPageGuest.html");
+        }
+
+
+
+
+
         function getHighlights() {
             ajaxCall("GET", "/api/Highlight", "", getSuccess, error);
         }
@@ -60,8 +91,8 @@
             str = "";
 
             for (var i = 0; i < data.length; i++) {
-                str += ' <input type="checkbox" id='+ data[i].Id + 'name="highlights" value=' + data[i].Id + '>';
-                str += ' <label for="highlights"> ' + data[i].HighlightName  + '</label><br><br>';
+                str += ' <input type="checkbox" id=' + data[i].Id + 'name="highlights" value=' + data[i].Id + '>';
+                str += ' <label for="highlights"> ' + data[i].HighlightName + '</label><br><br>';
             }
 
             str += '<input type="submit" value="Submit">';
@@ -77,19 +108,18 @@
             submithighlights();
             return false;
         }
-        function submithighlights()
-        {
+        function submithighlights() {
             var checks = $('input[type="checkbox"]:checked').map(function () {
                 return $(this).val();
             }).get()
             console.log(checks);
-            
+
             var multchecks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
             for (var j = 0; j < multchecks.length; j++) {
                 for (var i = 0; i < checks.length; i++) {
-                    if (j+1 == parseInt(checks[i]))
-                        multchecks[j]=1
+                    if (j + 1 == parseInt(checks[i]))
+                        multchecks[j] = 1
                 }
             }
             CustId = localStorage["customer_Id"];
@@ -107,7 +137,7 @@
             });
 
             console.log("after ajax ")
-           
+
         }
 
         function PostSuccess(data) {
@@ -135,30 +165,29 @@
     <section>
         <header>
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <button class="navbar-toggler"
-                            type="button"
-                            data-mdb-toggle="collapse"
-                            data-mdb-target="#navbarExample01"
-                            aria-controls="navbarExample01"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <i class="fas fa-bars"></i>
+                    <a class="navbar-brand" href="MainPageGuest.html">Restuarants</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarExample01">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item active">
-                                <a class="nav-link" aria-current="page" href="#">Resturants</a>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+
+                            <li class="nav-item">
+                                <a class="nav-link active" href="Preferences.html">Preferences</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Preferences</a>
+                                <a class="nav-link active" href="SignIn.html">SignIn</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Sign In</a>
+                                <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Managment</a>
+                                <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                             </li>
                         </ul>
                     </div>

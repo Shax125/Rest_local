@@ -19,9 +19,37 @@
         $(document).ready(function () {
             $('#sForm').submit(f1);
 
+            if (localStorage["customer_Id"] == null) {
+                $("#clear").prop("disabled", true);
+
+            }
+
+            else {
+                alert("you are already signed in. in order to disconnect please press sign out which is in the top of the bar");
+                location.replace("MainPageGuest.html");
+                $("#clear").prop("disabled", false);
+            }
+
+            $("#clear").click(clearLocal);
 
 
         });
+
+        function clearLocal()
+        {
+            localStorage.clear();
+            
+            $("#clear").prop("disabled", true);
+            location.replace('MainPageGuest.html');
+           
+        }
+
+
+
+
+
+
+     
         function GetSuccess(data) {
             console.log(data);
 
@@ -30,6 +58,7 @@
             else if (data.length == 1) {
                 alert("Log in Successfully as: " + data[0].Fname);
                 localStorage["customer_Id"] = JSON.stringify(data[0].Id);
+                location.replace("Preferences.html");
 
             }
             else
@@ -70,17 +99,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                   
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">HomePage</a>
+                        <a class="nav-link active" href="Preferences.html">Preferences</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Preferences.html">Preferences</a>
+                        <a class="nav-link active" href="SignIn.html">SignIn</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="SignIn.html">SignIn</a>
+                        <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">MANAGMENT AREA</a>
+                        <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                     </li>
                 </ul>
             </div>

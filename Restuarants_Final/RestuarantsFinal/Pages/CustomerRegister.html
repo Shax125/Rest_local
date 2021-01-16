@@ -5,13 +5,14 @@
 <head>
     <meta charset="utf-8" />
     <title>CustomerRegister</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-
+    
     <Script>
 
         $(document).ready(function () {
@@ -69,7 +70,7 @@
             }
 
             f1(NewImg);
-           
+
         }
 
         function error(data) {
@@ -87,7 +88,7 @@
         // POST ajax call for the form.
         function postCustomer2(NewImg) {
             console.log("In Post c");
-            
+
 
 
             c1 = {
@@ -103,7 +104,7 @@
 
             ajaxCall("POST", "/api/Customer", JSON.stringify(c1), PostSuccess, PostError)
 
-          
+
         }
 
         function PostSuccess(data) {
@@ -118,7 +119,7 @@
         }
 
         function preferncesSuccess(data) {
-            console.log("Prefernces Addes!");
+            console.log("Prefernces Add!");
         }
 
         function preferncesError(ex) {
@@ -137,9 +138,40 @@
 </head>
 <body>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="MainPageGuest.html">Restuarants</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Preferences.html">Preferences</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="SignIn.html">SignIn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
     <div class="container">
         <br />
-        <div><h1>Welcome to add new customer page:</h1></div><br />
+        <div><h2>Please enter your details here</h2></div><br />
         <form id="pForme">
             <div class="form-group">
                 <label for="fname">First name:</label>
