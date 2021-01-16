@@ -1,0 +1,331 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+
+    <meta charset="utf-8" />
+    <!--<link href="../Views/External_Picture.css" rel="stylesheet" />
+
+    <link href="../Views/Prefernces_StyleSheet.css" rel="stylesheet" />-->
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <!--<script src="../Scripts/ajaxCallsWithKey.js"></script>-->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <title>Prefernces</title>
+
+
+
+
+
+    <script>
+
+
+        function init() { }
+
+
+
+
+
+        $(document).ready(function () {
+
+
+            if (localStorage["customer_Id"] == null) {
+                alert("In order to see This Page you must Log in first")
+                location.replace("SignIn.html")
+            }
+
+
+
+            $("#checkIn").change(function () {
+
+
+
+                check($(this).val());
+            });
+
+        });
+
+
+
+        function check(Box_Value) {
+            //here we will get the highlight value he pushed on
+
+
+
+            if (Box_Value != null) {
+
+                CheckTransort = Box_Value
+
+                console.log(CheckTransort);
+
+                SendHighlight(CheckTransort);
+            }
+
+            else {
+            }
+
+
+
+
+        }
+
+
+        function SendHighlight(CheckTransort) {//in this fuction we will perform POST into the Table "Highlights for customers"
+            CustId = JSON.parse(localStorage["customer_Id"])
+            const HighLight = {
+
+                Id: CustId,
+                PreferID: CheckTransort
+
+            }
+
+            //console.log(HighLight)
+
+            ajaxCall("POST", "/api/CustLight", JSON.stringify(HighLight), PostSuccess, PostError)
+        }
+
+        function PostSuccess() { alert("add succesfully") }
+
+        function PostError() {
+            alert("error in Customer hilights")
+        }
+
+        // צריך לעשות גם DELETE לתכונה
+
+
+    </script>
+
+
+</head>
+
+
+
+
+<body onload="init()">
+
+    <!--Start of the Main Picture -->
+    <section>
+        <header>
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+                <div class="container-fluid">
+                    <button class="navbar-toggler"
+                            type="button"
+                            data-mdb-toggle="collapse"
+                            data-mdb-target="#navbarExample01"
+                            aria-controls="navbarExample01"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarExample01">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item active">
+                                <a class="nav-link" aria-current="page" href="#">Resturants</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Preferences</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Sign In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Managment</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar -->
+            <!-- Background image -->
+            <div class="p-5 text-center bg-image"
+                 style=" background-image: url('https://i.pinimg.com/originals/c2/c6/4b/c2c64b930af48a341c3adef7c659d36e.png'); height: 400px; margin-top: 58px; ">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0); margin-top:100px">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="text-white">
+                            <h1 class="display-4 font-weight-bold fonting">Preferences</h1>
+                            <h4 class="font-italic mb-4 fonting">By Adam Uzan&ShayDavid&shirHertzman</h4>
+                            <a style="margin:10px;" class="btn btn-outline-light btn-lg" href="#!" role="button">Resturants</a>
+                            <a style="margin:10px;" class="btn btn-outline-light btn-lg" href="Preferences.html" role="button">Preferences</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+            <!-- Background image -->
+        </header>
+
+    </section>
+
+
+    <!--End of the Main Picture -->
+
+
+
+
+
+
+
+    <section id="main_buttons">
+
+        <div id="ph1">
+
+            <div class="container">
+                <div class="row" id="mrgdown">
+                    <div class="col">
+
+                        <table style="margin:0px auto">
+                            <tr>
+                                <td>
+                                    <label class="containerBox">
+                                        Cash
+                                        <input id="checkIn" type="checkbox" value="1">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                                <td>
+
+                                    <label class="containerBox">
+                                        Credit Card
+                                        <input id="checkIn" type="checkbox" value="2">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="containerBox">
+                                        Luxury Dining
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                                <td>
+
+                                    <label class="containerBox">
+                                        Vegan Options
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="containerBox">
+                                        Nightlife
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                                <td>
+
+                                    <label class="containerBox">
+                                        Serves Alcohol
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="containerBox">
+                                        Takeaway Available
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                                <td>
+
+                                    <label class="containerBox">
+                                        Table booking recommended
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label class="containerBox">
+                                        Outdoor Seating
+                                        <input type="checkbox" checked="checked">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                                <td>
+
+                                    <label class="containerBox">
+                                        Gluten Free Options
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </td>
+
+                            </tr>
+
+
+
+                        </table>
+
+                        <br />
+
+
+                        <div class="centerBTN">
+                            <a href="index.html" role="button" class="btn btn-primary px-5">Back to Restaurants</a> &nbsp; &nbsp;
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,174 @@
+﻿
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>CustomerRegister</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <Script>
+
+        $(document).ready(function () {
+
+            $('#buttonUpload').on('click', function () {
+                var data = new FormData();
+                var files = $("#files").get(0).files;
+
+                // Add the uploaded file to the form data collection
+                if (files.length > 0) {
+                    for (f = 0; f < files.length; f++) {
+                        data.append("UploadedImage", files[f]);
+                    }
+                    data.append("id", $('#email').val()); // append what ever data you want to send along with the files. See how you extract it in the controller.
+                }
+
+                // Ajax upload
+                $.ajax({
+                    type: "POST",
+                    url: "/Api/IMAGE",
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: showImages,
+                    error: error
+                });
+
+                return false;
+            });
+
+
+
+            $('#pForme').submit(f1);
+
+        });
+
+
+        function showImages(data) {
+            console.log(data);
+            var NewImg = "";
+            var imgStr = "";
+            // IdImg++;
+            if (Array.isArray(data)) {
+
+                for (var i = 0; i < data.length; i++) {
+                    imgStr += "<img src='../" + data[i] + "'/>";
+                    NewImg += data[i];
+                }
+
+            }
+
+            else {
+                imgStr = "<img src='../" + data + "'/>";
+                NewImg += data;
+            }
+
+            f1(NewImg);
+           
+        }
+
+        function error(data) {
+            console.log("Error in UploadFile");
+
+
+        }
+
+
+
+        function f1(NewImg) {
+            postCustomer2(NewImg);
+            return false;
+        }
+
+        // POST ajax call for the form.
+        function postCustomer2(NewImg) {
+            console.log("In Post c");
+
+            c1 = {
+
+                Fname: $('#fname').val(),
+                Lname: $('#lname').val(),
+                Email: $('#email').val(),
+                Phone: $('#phone').val(),
+                Pass: $('#password').val(),
+                Img: NewImg
+            }
+
+
+            ajaxCall("POST", "/api/Customer", JSON.stringify(c1), PostSuccess, PostError)
+        }
+
+        function PostSuccess(data) {
+            alert("Added Successfuly!", "Great Job", "success");
+            console.log(data);
+
+        }
+
+        function PostError(err) {
+            alert("error");
+
+        }
+    </Script>
+
+
+
+
+</head>
+<body>
+
+    <div class="container">
+        <br />
+        <div><h1>Welcome to add new customer page:</h1></div><br />
+        <form id="pForme">
+            <div class="form-group">
+                <label for="fname">First name:</label>
+                <input type="text" class="form-control" placeholder="Enter first name" id="fname" pattern="^[a-zA-Z]{1,10}$" oninvalid="this.setCustomValidity('Please enter only English letters')" oninput="this.setCustomValidity('')" required>
+
+            </div>
+            <div class="form-group">
+                <label for="lname">Last name:</label>
+                <input type="text" class="form-control" placeholder="Enter last name" id="lname" pattern="^[a-zA-Z]{1,20}$" oninvalid="this.setCustomValidity('Please enter only English letters')" oninput="this.setCustomValidity('')" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="text" class="form-control" placeholder="Enter email" id="email" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be aaa@email.com')" oninput="this.setCustomValidity('')" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" placeholder="Enter Phone number" id="phone" pattern="^\d{3}-\d{3}-\d{4}$" oninvalid="this.setCustomValidity('Format should be ddd-ddd-dddd')" oninput="this.setCustomValidity('')" required>
+            </div>
+            <div class="form-group">
+                <label for="pass">Password:</label>
+                <input type="text" class="form-control" placeholder="Enter your password" id="password" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$" oninvalid="this.setCustomValidity('Please enter a password with at least 8 characters that include at least one capital letter and one number')" oninput="this.setCustomValidity('')" required>
+
+            </div>
+
+
+
+
+            <!--img-->
+
+            <div>
+                <label for="files">Files</label>
+                <input type="file" id="files" name="files" multiple="multiple">
+            </div>
+            <button type="button" id="buttonUpload">Submit</button>
+            <br /><br />
+
+            <!-- <input type="submit" value="Submit" id="subbtn">-->
+
+
+        </form>
+
+
+
+        <div id="ph"></div>
+    </div>
+
+</body>
+</html>

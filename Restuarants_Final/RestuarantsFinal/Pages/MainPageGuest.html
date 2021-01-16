@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <meta charset="utf-8" />
+    <title>GuestMainPage</title>
+    <script>
+        $(document).ready(function () {
+
+
+
+
+            $("#search").click(f1);
+
+        });
+        function f1() {
+            if (category = $("#category").val() != 0)
+                getr();
+            else
+                alert("please choose category first...");
+
+
+            return false;
+
+        }
+        function GetSuccess(data) {
+            console.log(data)
+            var str = "";
+            document.getElementById("ph2").innerHTML = "";
+
+            for (var i = 0; i < data.length; i++) {
+
+                str += "<div class='card' style ='width: 18rem ;'>";
+                str += "<img class='card-img-top' src=" + data[i].Img+" alt='Card image cap'>"
+                str += "<div class='card-body'>"
+                str += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+
+                str += "</div>"
+                str += "<ul class='list-group list-group-flush'>";
+                str += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address+"</li>"
+                str += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone +"</li>"
+                str += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating +"</li>"
+                str += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange +"</li>"
+                str += "</ul>";
+                str += "</div>";
+                str += "</br>";
+                
+            }
+            $("#ph2").append(str);
+
+        }
+        function GetError(ex) {
+            console.log(ex);
+        }
+        function getr() {
+
+            var category = $("#category").val();
+            console.log(category);
+            ajaxCall("GET", "/api/Business?categoryfromuser=" + category, "", GetSuccess, GetError);
+
+        }
+
+
+
+    </script>
+
+
+</head>
+<body>
+
+    <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="MainPageGuest.html">Restuarants</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">HomePage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Preferences</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="SignIn.html">SignIn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">MANAGMENT AREA</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <br />
+
+
+
+        <label>Please Choose Category: </label>
+        <select class="drop" name="cuisine" id="category">
+            <option value="0">---</option>
+            <option value="American">American</option>
+            <option value="Asian">Asian</option>
+            <option value="Italian">Italian</option>
+            <option value="Lebanese">Lebanese</option>
+            <option value="Filipino">Filipino</option>
+            <option value="European">European</option>
+            <option value="Indian">Indian</option>
+        </select>
+
+
+        <button type="button" class="btn btn-secondary" id="search">CLICK</button>
+
+        <h1>Promoting funded</h1>
+        <div id="ph1">empty</div>
+
+
+        <div>
+            <h1>Organic Promotion</h1>
+            <div id="ph2">
+
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

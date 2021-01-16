@@ -1,0 +1,1 @@
+﻿select * from Customers_2021A_T4
