@@ -10,15 +10,18 @@ namespace RestuarantsFinal.Models
     {
         int id;
         int preferID;
+        bool status;
 
-        public CustomerHL(int id, int preferID)
+        public CustomerHL(int id, int preferID, bool status)
         {
             Id = id;
             PreferID = preferID;
+            Status = status;
         }
 
         public int Id { get => id; set => id = value; }
         public int PreferID { get => preferID; set => preferID = value; }
+        public bool Status { get => status; set => status = value; }
 
 
         public CustomerHL()
@@ -26,10 +29,20 @@ namespace RestuarantsFinal.Models
 
         }
 
-        public void InsertCust()
+        public void setDefaultPerfernces(int id)
         {
             DBService dbs = new DBService();
-            dbs.InsertCustomerCH(this);
+            dbs.setDefaultPerfernces(id);
+
+        }
+
+        public void updatePrefernces(int id, string arr)
+        {
+            DBService dbs = new DBService();
+            dbs.updatePrefernces(id, arr);
+
+
+
 
         }
 

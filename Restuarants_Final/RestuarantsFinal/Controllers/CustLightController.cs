@@ -23,15 +23,23 @@ namespace RestuarantsFinal.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody] CustomerHL Custlight)
+        public void Post(int id)
         {
-            Custlight.InsertCust();
+            {
+                CustomerHL c = new CustomerHL();
+                c.setDefaultPerfernces(id);
+
+            }
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, string arr) 
         {
+            CustomerHL ch = new CustomerHL();
+            ch.updatePrefernces(id, arr);
         }
+        
+        
 
         // DELETE api/<controller>/5
         public void Delete(int id)

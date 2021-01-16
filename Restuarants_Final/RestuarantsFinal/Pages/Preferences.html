@@ -22,15 +22,12 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-
     <title>Prefernces</title>
 
 
     <script>
 
-
-        function init() { }
+       
 
         $(document).ready(function () {
             if (localStorage["customer_Id"] == null) {
@@ -40,14 +37,16 @@
 
             $("#checkIn").change(function () {
 
-
-
                 check($(this).val());
             });
 
             getHighlights();
 
-            $("#highlightsform").submit(submithighlights());
+            //$("#highlightsform").submit();
+            $("#highlightsform").submit(function (e) {
+                e.preventDefault();
+                middle();
+            });
 
 
         });
@@ -70,62 +69,56 @@
 
         }
 
-
         function error(ex) {
             console.log(ex);
         }
 
-        function submithighlights() {
-            console.log(arr);
+        function middle() {
+            submithighlights();
+            return false;
+        }
+        function submithighlights()
+        {
+            var checks = $('input[type="checkbox"]:checked').map(function () {
+                return $(this).val();
+            }).get()
+            console.log(checks);
+            
+            var multchecks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+            for (var j = 0; j < multchecks.length; j++) {
+                for (var i = 0; i < checks.length; i++) {
+                    if (j+1 == parseInt(checks[i]))
+                        multchecks[j]=1
+                }
+            }
+            CustId = localStorage["customer_Id"];
+            console.log("multchecks: ", multchecks)
 
+            //ajaxCall("PUT", "/api/CustLight/?id= " + 1052 + "&arr=" + multchecks, "", PostSuccess, PostError)
+            $.ajax({
+                type: "PUT",
+                url: "/api/CustLight/?id= " + 1052 + "&arr=" + JSON.stringify(multchecks),
+                contentType: false,
+                processData: false,
+                data: "",
+                success: PostSuccess,
+                error: PostError
+            });
 
-
+            console.log("after ajax ")
+           
         }
 
-        function check(Box_Value) {
-            //here we will get the highlight value he pushed on
-
-
-
-            if (Box_Value != null) {
-
-                CheckTransort = Box_Value
-
-                console.log(CheckTransort);
-
-                SendHighlight(CheckTransort);
-            }
-
-            else {
-            }
-
-
-
-
+        function PostSuccess(data) {
+            console.log(data);
+            alert("add succesfully")
         }
 
-        function SendHighlight(CheckTransort) {//in this fuction we will perform POST into the Table "Highlights for customers"
-            CustId = JSON.parse(localStorage["customer_Id"])
-            const HighLight = {
-
-                Id: CustId,
-                PreferID: CheckTransort
-
-            }
-
-            //console.log(HighLight)
-
-            ajaxCall("POST", "/api/CustLight", JSON.stringify(HighLight), PostSuccess, PostError)
-        }
-
-        function PostSuccess() { alert("add succesfully") }
-
-        function PostError() {
+        function PostError(ex) {
+            console.log(ex);
             alert("error in Customer hilights")
         }
-
-        // צריך לעשות גם DELETE לתכונה
 
 
     </script>
@@ -136,7 +129,7 @@
 
 
 
-<body onload="init()">
+<body>
 
     <!--Start of the Main Picture -->
     <section>

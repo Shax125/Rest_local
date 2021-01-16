@@ -60,10 +60,10 @@ namespace RestuarantsFinal.Models
         }
 
 
-        public void InsertCust() //he want to enter himself so no need to pass
+        public int InsertCust() //he want to enter himself so no need to pass
         {
             DBService dbs = new DBService(); //so we can use the function there
-            dbs.InsertCustomer(this);
+            return dbs.InsertCustomer(this);
 
             // return dbs.InsertCustomer(this);
         }

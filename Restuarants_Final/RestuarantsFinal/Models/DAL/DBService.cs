@@ -14,6 +14,7 @@ namespace RestuarantsFinal.Models.DAL
         public SqlDataAdapter da;
         public DataTable dt;
 
+
         public DBService()
         {
 
@@ -72,7 +73,7 @@ namespace RestuarantsFinal.Models.DAL
 
         }
         
-            public List<Highlight> getHighlights()
+        public List<Highlight> getHighlights()
         {
             SqlConnection con = null;
             List<Highlight> hList = new List<Highlight>();
@@ -113,6 +114,7 @@ namespace RestuarantsFinal.Models.DAL
 
             }
         }
+
         public List<Business> getRestaurants(string categoryfromuser)
         {
             SqlConnection con = null;
@@ -211,10 +213,9 @@ namespace RestuarantsFinal.Models.DAL
 
         public int setNotactive(int id)
         {
-
             SqlConnection con;
             SqlCommand cmd;
-
+            
             try
             {
                 con = connect("Igroup44DB"); // create the connection
@@ -251,6 +252,7 @@ namespace RestuarantsFinal.Models.DAL
             }
 
         }
+
         private String BuildInsertCommand(int id) //The second C
         {
             String command;
@@ -263,6 +265,7 @@ namespace RestuarantsFinal.Models.DAL
 
             return command;
         }
+
         private SqlCommand CreateCommand(String CommandSTR, SqlConnection con)
         {
 
@@ -301,7 +304,7 @@ namespace RestuarantsFinal.Models.DAL
 
             try
             {
-                int numEffected = cmd2.ExecuteNonQuery(); // execute the command
+                int numEffected = (Int32)cmd2.ExecuteScalar(); // execute the command
                 return numEffected;
             }
             catch (Exception ex)
@@ -329,7 +332,7 @@ namespace RestuarantsFinal.Models.DAL
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             sb.AppendFormat("Values( '{0}', '{1}', '{2}', '{3}','{4}','{5}','{6}')", bs.Fname, bs.Lname, bs.Email, bs.Phone, bs.Pass, bs.Range, bs.Img );
-            String prefix = "INSERT INTO Customers_2021A_T4 " + "( [first_name], [last_name], [email], [phone], [pass_word],[price_range], [photo]) ";
+            String prefix = "INSERT INTO Customers_2021A_T4 " + "( [first_name], [last_name], [email], [phone], [pass_word],[price_range], [photo]) output Inserted.id ";
             command = prefix + sb.ToString();
 
             return command;
@@ -351,7 +354,7 @@ namespace RestuarantsFinal.Models.DAL
             return cmd2;
         }
 
-        public int InsertCustomerCH(CustomerHL bs)
+        public int setDefaultPerfernces(int id)
         {
 
             SqlConnection con3;
@@ -367,7 +370,7 @@ namespace RestuarantsFinal.Models.DAL
                 throw (ex);
             }
 
-            String cStr = BuildInsertCommand(bs);      // helper method to build the insert string
+            String cStr = BuildInsertCommandforPrefernces(id);      // helper method to build the insert string
 
             cmd3 = CreateCommand3(cStr, con3);             // create the command
 
@@ -394,15 +397,21 @@ namespace RestuarantsFinal.Models.DAL
 
         }
 
-        private String BuildInsertCommand(CustomerHL bs)
+        private String BuildInsertCommandforPrefernces(int id)
         {
             String command;
 
-            StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values( '{0}', '{1}')", bs.Id, bs.PreferID);
-            String prefix = "INSERT INTO Customer_Highlights_2021A_T4 " + "( [idC], [idH]) ";
-            command = prefix + sb.ToString();
+            string st = "";
+
+            for (int i = 1; i < 10; i++)
+            {
+                    st += " ( " + id + " , " + i + " , " + 0 + " ), ";
+            }
+            st += " ( " + id + " , " + 10 + " , " + 0 + " )";
+
+            String prefix = " INSERT INTO Customer_Highlights_2021A_T4 " + "( [idC], [idH], [status] )  VALUES ";
+            command = prefix + st;
 
             return command;
         }
@@ -422,5 +431,73 @@ namespace RestuarantsFinal.Models.DAL
 
             return cmd3;
         }
+
+        public int updatePrefernces(int id, string arr)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("Igroup44DB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildInsertCommand(id, arr);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected; //return how many row's effected.
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+
+                }
+            }
+
+        }
+
+        private String BuildInsertCommand(int id, string arr) //The second C
+        {
+            //String command;
+
+            string str = "";
+            //StringBuilder sb = new StringBuilder();
+
+            for (int i = 1, j = 1 ; j < 11; j++ )
+            {
+                str += " UPDATE Customer_HighLights_2021A_T4 SET status = " + arr[i] + " WHERE idC = "+ id + " AND idH = " + (j) + " ";
+                i += 2;
+            }
+
+            // use a string builder to create the dynamic string
+            //sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", business.Id, business.Name, business.Img, business.Rating, business.Category, business.Address, business.Phone, business.PriceRange);
+            //String prefix = "UPDATE Customer_HighLights_2021A_T4  SET ";
+            
+
+            //command = prefix;
+
+            return str;
+        }
+
+
+
     }
 }

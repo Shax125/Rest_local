@@ -79,7 +79,6 @@
         }
 
 
-
         function f1(NewImg) {
             postCustomer2(NewImg);
             return false;
@@ -88,6 +87,8 @@
         // POST ajax call for the form.
         function postCustomer2(NewImg) {
             console.log("In Post c");
+            
+
 
             c1 = {
 
@@ -101,12 +102,27 @@
 
 
             ajaxCall("POST", "/api/Customer", JSON.stringify(c1), PostSuccess, PostError)
+
+          
         }
 
         function PostSuccess(data) {
             alert("Added Successfuly!", "Great Job", "success");
             console.log(data);
 
+
+            ajaxCall("POST", "/api/CustLight?id=" + data, "", preferncesSuccess, preferncesError)
+
+
+
+        }
+
+        function preferncesSuccess(data) {
+            console.log("Prefernces Addes!");
+        }
+
+        function preferncesError(ex) {
+            console.log(ex);
         }
 
         function PostError(err) {

@@ -20,11 +20,10 @@ namespace RestuarantsFinal.Controllers
 
 
         // POST api/<controller>
-        public void Post([FromBody] Customer cust)
+        public int Post([FromBody] Customer cust)
         {
-            cust.InsertCust();
+           return cust.InsertCust();
 
-            //return cust.InsertCust();
 
         }
 
