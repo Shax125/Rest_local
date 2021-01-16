@@ -98,7 +98,7 @@
             //ajaxCall("PUT", "/api/CustLight/?id= " + 1052 + "&arr=" + multchecks, "", PostSuccess, PostError)
             $.ajax({
                 type: "PUT",
-                url: "/api/CustLight/?id= " + 1052 + "&arr=" + JSON.stringify(multchecks),
+                url: "/api/CustLight/?id= " + CustId + "&arr=" + JSON.stringify(multchecks),
                 contentType: false,
                 processData: false,
                 data: "",
