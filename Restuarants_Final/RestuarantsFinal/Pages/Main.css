@@ -40,8 +40,64 @@
 }
 
 
+/*this position and down contain the check box (in the preferences page) style*/
 
 
+#containerPreferBox {
+   /* background-image: url('../pics/hey.jpg');*/
+    /* background-color:black;*/
+    background-repeat: no-repeat;
+    background-size: 100%;
+    /*border: 5px solid black;*/
+   
+}
+#checkIT {
+    width: 350px;
+    
+    position:relative;
+    top:50%;
+    left:36%;
+ 
+       
+    
+}
+
+
+
+#containerPreferBox#checkIT {
+}
+#btnSub {
+    width: 75px;
+    height: 50px;
+    margin: 0px auto;
+    background-color: #0094ff;
+    border-radius: 10px;
+    font: bold;
+    position:relative;
+    top:50%;
+    right:10%;
+
+}
+#btnSub:hover{background-color:aqua;}
+
+.CheckB {
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+   
+}
+
+.container1  {
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+
+#checkCol {
+
+    
+}
 
 
 

@@ -95,13 +95,30 @@
             console.log(data);
 
             str = "";
-
+            str += "<div id='containerPreferBox'class='container'>";
+            str += "<div id='checkIT' class='row'>";
             for (var i = 0; i < data.length; i++) {
-                str += ' <input type="checkbox" id=' + data[i].Id + 'name="highlights" value=' + data[i].Id + '>';
-                str += ' <label for="highlights"> ' + data[i].HighlightName + '</label><br><br>';
+                str += "<div id='checkCol' class=' col-sm-6 '>"
+               
+               
+                str += "<label class='container1' >"
+                str += ' <input type="checkbox"  id=' + data[i].Id + 'name="highlights" value=' + data[i].Id + '>';
+                str += "<span class='CheckB'></span>"
+                str+="</label>"
+               
+                str += ' <label  for="highlights"> ' + data[i].HighlightName + '</label><br><br>';
+                
+               
+                str += "</div>";
+                
             }
 
-            str += '<input type="submit" value="Submit">';
+            
+          
+            str += '<input type="submit" value="Submit" id="btnSub">';
+           
+            str += '</div';
+            str += '</div';
             $("#highlightsform").append(str);
 
         }
@@ -165,7 +182,7 @@
 
 
 
-<body>
+<body >
 
     <!--Start of the Main Picture -->
     <section>
