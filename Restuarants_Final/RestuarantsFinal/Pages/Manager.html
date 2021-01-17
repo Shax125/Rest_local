@@ -13,28 +13,26 @@
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="Main.css" rel="stylesheet" />
+    <!--<link href="Main.css" rel="stylesheet" />-->
     <title></title>
     <script>
         var campain;
 
 
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
+
 
             getcampain();
+         
+            $("#viewandedit").submit(function (e) {
+                e.preventDefault();
+                middle();
+            });
 
-            $('#viewandedit').submit(f2);
-
+            $('#Addcampaign').click(addnewcampaign)
 
         });
-        function f2() {
-            console.log('on f2');
-            return false;
-        }
-
-        function getcampain() {
-            ajaxCall("GET", "/api/Campaign", "", getSuccess, error);
-        }
 
         $(document).on("click", ".deleteBtn", function () {
             //markSelected(this);
@@ -55,35 +53,73 @@
         $(document).on("click", ".viewBtn", function () {
             //markSelected(this);
             var campaignId = this.getAttribute('data-campainId');
-            console.log(campain);
+            console.log("in View: ", campain);
             str1 = "";
             console.log("obj: ", campain[campaignId])
+            var c;
+            $("#restuarantPH").toggle();
+            for (var i = 0; i < campain.length; i++) {
+                if (campain[i].Id == campaignId)
+                    c = i
+            }
             $("#restuarantPH").text("");
             str1 += "<form id='viewandedit'>"
             str1 += "<label for='id'> ID: </label >";
-            str1 += "<input type='text' id='id' name='id' disabled value='" + campain[campaignId].Id + "'/><br><br>";
+            str1 += "<input type='text' id='id' name='id' disabled value='" + campain[c].Id + "'/><br><br>";
             str1 += "<label for='budget'> Budget: </label > ";
-            str1 += "<input type='text' id='budget' name='budget' value='" + campain[campaignId].Budjet + "'/><br><br>";
+            str1 += "<input type='text' id='budget' name='budget' value='" + campain[c].Budjet + "'/><br><br>";
             str1 += "<label for='balance'> Balance: </label > ";
-            str1 += "<input type='text' id='balance' name='balance' disabled value='" + campain[campaignId].Balance + "'/><br><br>";
+            str1 += "<input type='text' id='balance' name='balance' disabled value='" + campain[c].Balance + "'/><br><br>";
             str1 += "<label for='clickCounter'> Click Counter: </label > ";
-            str1 += "<input type='text' id='clickCounter' name='clickCounter' disabled value='" + campain[campaignId].Clickcounter + "'/><br><br>";
+            str1 += "<input type='text' id='clickCounter' name='clickCounter' disabled value='" + campain[c].Clickcounter + "'/><br><br>";
             str1 += "<label for='viewcounter'> view counter: </label > ";
-            str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campain[campaignId].Viewcounter + "'/><br><br>"
+            str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campain[c].Viewcounter + "'/><br><br>"
             str1 += "<label for= 'idr'> Id Restaurant: </label > ";
-            str1 += "<input type='text' id='idr' name='idr' disabled value='" + campain[campaignId].IdR + "'/><br><br>"
+            str1 += "<input type='text' id='idr' name='idr' disabled value='" + campain[c].IdR + "'/><br><br>"
             str1 += "<input type='submit' value='Submit'> </form>";
 
-            $("#restuarantPH").append(str1);
+            $("#restuarantPH").html(str1);
+
 
         });
 
+        function middle() {
+            submitcampaignbudget();
+            return false;
+           
+        }
+
+        function addnewcampaign() {
+
+            $("#addrestuarantPH").toggle();
+
+            str2 = "";
+            str2 += "<form id='addcampaign' >"
+            str2 += "<label for='id'> ID: </label >";
+            str2 += "<input type='text' id='idadd' name='id'/><br><br>";
+            str2 += "<label for='budget'> Budget: </label > ";
+            str2 += "<input type='text' id='budgetadd' name='budget' /><br><br>";
+            str2 += "<label for= 'idr'> Id Restaurant: </label > ";
+            str2 += "<input type='text' id='idrestaurantsadd' name='idr' /><br><br>"
+            str2 += "<input type='submit' value='Submit'> </form>";
+
+            $("#addrestuarantPH").html(str2);
+        }
+
+        function submitcampaignbudget() {
+            var r = $("#budget").val();
+            console.log("unupdateBfunc", r);
+        }
+
+        function getcampain() {
+            ajaxCall("GET", "/api/Campaign", "", getSuccess, error);
+        }
 
         function Deletecampain(id) {
 
-
             ajaxCall("PUT", "/api/Campaign/" + id, "", deleteSuccess, deleterror);
         }
+
         function deleteSuccess(campaindata) {
             //tbl.clear();
             $("#tbody1").text(" ");
@@ -93,10 +129,10 @@
             //$("#editDiv").hide();
             swal("Deleted Successfuly!", "Great Job", "success");
         }
+
         function deleterror(err) {
             swal("Error: " + err);
         }
-
 
         function getSuccess(campaindata) {
 
@@ -157,8 +193,27 @@
             swal("Error: " + err);
         }
 
+        $("#addcampaign").submit(function (e) {
+            e.preventDefault();
+            submitnewcampaign();
+           
+        });
+
+        function submitnewcampaign() {
 
 
+            sendcampaign();
+            return false;
+
+        }
+
+        function sendcampaign() {
+
+            console.log("id ", $("#idadd").val());
+            console.log("budget ", $("#budgetadd").val());
+            console.log("res ",$("#idrestaurantsadd").val());
+
+        }
 
 
     </script>
@@ -169,23 +224,10 @@
 
     <div>
 
-
+        <button id="Addcampaign">Add new campaign</button>
         <form id="pForm">
             <div id="campainTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                <!--<div class="row">
-                <div class="col-sm-6">
-                    <div class="dataTables_length" id="carsTable_length">
-                    <label>Show
-                        <select name="carsTable_length" aria-controls="campainTable" class="form-control input-sm">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                         </select>
-                        entries</label></div></div>
-                <div class="col-sm-6"><div id="carsTable_filter" class="dataTables_filter">
-                    <label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="carsTable"></label>
-                     </div></div></div>-->
+
                 <div class="row">
                     <div class="col-sm-12">
                         <table id="campainTable" class="display nowrap dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="campainTable_info">
@@ -222,17 +264,16 @@
 
 
         </form>
+
+
         <div id="restuarantPH">
-
-
-
         </div>
-
+        <div id="addrestuarantPH">
+        </div>
 
 
     </div>
 
-    <div>adam</div>
 
 </body>
 </html>
