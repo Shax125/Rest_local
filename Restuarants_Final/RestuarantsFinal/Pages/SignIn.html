@@ -10,24 +10,33 @@
     <script src="../Scripts/bootstrap.min.js"></script>
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
-
+    <link href="Main.css" rel="stylesheet" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <meta charset="utf-8" />
     <title>GuestMainPage</title>
     <script>
+        line = '';
         $(document).ready(function () {
             $('#sForm').submit(f1);
 
             if (localStorage["customer_Id"] == null) {
-                $("#clear").prop("disabled", true);
-
+              //  $("#clear").prop("disabled", true);
+                line += "<li class='nav-item' id='Log'>" + "<a class='nav-link active' href='SignIn.html'>Sign In</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line; 
+              
             }
 
             else {
                 alert("you are already signed in. in order to disconnect please press sign out which is in the top of the bar");
+                line += "<li class='nav-item' >" + "<a class='nav-link active' onclick='clearLocal()' href='MainPageGuest.html'>Sign Out</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line; 
                 location.replace("MainPageGuest.html");
-                $("#clear").prop("disabled", false);
+
+                //$("#clear").prop("disabled", false);
+             
+              
+
             }
 
             $("#clear").click(clearLocal);
@@ -35,13 +44,12 @@
 
         });
 
-        function clearLocal()
-        {
+        function clearLocal() {
             localStorage.clear();
-            
+
             $("#clear").prop("disabled", true);
             location.replace('MainPageGuest.html');
-           
+
         }
 
 
@@ -49,7 +57,7 @@
 
 
 
-     
+
         function GetSuccess(data) {
             console.log(data);
 
@@ -98,22 +106,23 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                   
+                <ul class="navbar-nav" id="navbar-nav2">
+
                     <li class="nav-item">
                         <a class="nav-link active" href="Preferences.html">Preferences</a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link active" href="SignIn.html">SignIn</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
+                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                     </li>
                 </ul>
             </div>

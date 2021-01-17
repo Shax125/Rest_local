@@ -13,6 +13,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="Main.css" rel="stylesheet" />
     <title></title>
     <script>
         var campain;
@@ -23,7 +24,7 @@
             getcampain();
 
             $('#viewandedit').submit(f2);
-            
+
 
         });
         function f2() {
@@ -38,7 +39,7 @@
         $(document).on("click", ".deleteBtn", function () {
             //markSelected(this);
             var campaingId = this.getAttribute('data-campainId');
-            swal({ // this will open a dialouge 
+            swal({ // this will open a dialouge
                 title: "Are you sure ??",
                 text: "",
                 icon: "warning",
@@ -59,8 +60,8 @@
             console.log("obj: ", campain[campaignId])
             $("#restuarantPH").text("");
             str1 += "<form id='viewandedit'>"
-            str1 +=   "<label for='id'> ID: </label >";
-            str1 += "<input type='text' id='id' name='id' disabled value='" + campain[campaignId].Id +"'/><br><br>";
+            str1 += "<label for='id'> ID: </label >";
+            str1 += "<input type='text' id='id' name='id' disabled value='" + campain[campaignId].Id + "'/><br><br>";
             str1 += "<label for='budget'> Budget: </label > ";
             str1 += "<input type='text' id='budget' name='budget' value='" + campain[campaignId].Budjet + "'/><br><br>";
             str1 += "<label for='balance'> Balance: </label > ";
@@ -68,7 +69,7 @@
             str1 += "<label for='clickCounter'> Click Counter: </label > ";
             str1 += "<input type='text' id='clickCounter' name='clickCounter' disabled value='" + campain[campaignId].Clickcounter + "'/><br><br>";
             str1 += "<label for='viewcounter'> view counter: </label > ";
-            str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campain[campaignId].Viewcounter + "'/><br><br>" 
+            str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campain[campaignId].Viewcounter + "'/><br><br>"
             str1 += "<label for= 'idr'> Id Restaurant: </label > ";
             str1 += "<input type='text' id='idr' name='idr' disabled value='" + campain[campaignId].IdR + "'/><br><br>"
             str1 += "<input type='submit' value='Submit'> </form>";
@@ -79,8 +80,8 @@
 
 
         function Deletecampain(id) {
-            
-          
+
+
             ajaxCall("PUT", "/api/Campaign/" + id, "", deleteSuccess, deleterror);
         }
         function deleteSuccess(campaindata) {
@@ -95,7 +96,7 @@
         function deleterror(err) {
             swal("Error: " + err);
         }
-       
+
 
         function getSuccess(campaindata) {
 
@@ -121,7 +122,7 @@
             //            { data: "ClickCounter" },
             //            { data: "ViewCounter" },
             //            { data: "Status" },
-                    
+
             //        ],
             //    });
             //    // buttonEvents();
@@ -130,8 +131,8 @@
             //catch (err) {
             //    alert(err);
             //}
-            str=""
-            for (var i = 0; i < campaindata.length; i++) { 
+            str = ""
+            for (var i = 0; i < campaindata.length; i++) {
 
                 str += "<tr role='row' class='odd'>";
                 str += '<td class="sorting_1">';
@@ -140,13 +141,13 @@
                 str += '<button type="button" class="deleteBtn btn btn-danger" data-CampainId="' + campaindata[i].Id + '"> Delete </button>';
                 str += '</td>';
                 str += ' <td>' + campaindata[i].Id + '</td>';
-                str += ' <td>' + campaindata[i].Budjet +'</td>';
-                str += ' <td>' + campaindata[i].Balance +'</td>';
-                str += ' <td>' + campaindata[i].Clickcounter +'</td>';
-                str += ' <td>' + campaindata[i].Viewcounter +'</td>';
-                str += ' <td>' + campaindata[i].Status +'</td>'; 
+                str += ' <td>' + campaindata[i].Budjet + '</td>';
+                str += ' <td>' + campaindata[i].Balance + '</td>';
+                str += ' <td>' + campaindata[i].Clickcounter + '</td>';
+                str += ' <td>' + campaindata[i].Viewcounter + '</td>';
+                str += ' <td>' + campaindata[i].Status + '</td>';
                 str += ' </tr>';
-                
+
             }
 
             $("#tbody1").append(str);

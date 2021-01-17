@@ -13,7 +13,7 @@
     <script src="../Scripts/ajaxCalls.js"></script>
 
     <!--<script src="../Scripts/jquery-3.4.1.js"></script>-->
-    <!--<script src="../Scripts/ajaxCallsWithKey.js"></script>-->
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
     <script src="../Scripts/jquery-3.4.1.min.js"></script>
@@ -26,7 +26,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-
+    <link href="Main.css" rel="stylesheet" />
 
 
 
@@ -38,16 +38,22 @@
 
     <script>
 
-
+        line = '';
 
         $(document).ready(function () {
+
             if (localStorage["customer_Id"] == null) {
                 alert("In order to see This Page you must Log in first")
+               
+                line += "<li class='nav-item' id='Log'>" + "<a class='nav-link active' href='SignIn.html'>Sign In</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line; 
                 location.replace("SignIn.html")
             }
 
             else {
-                $("#clear").prop("disabled", false);
+                line += "<li class='nav-item' >" + "<a class='nav-link active' onclick='clearLocal()' href='MainPageGuest.html'>Sign Out</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line; 
+                //$("#clear").prop("disabled", false);
             }
 
 
@@ -73,7 +79,7 @@
 
         function clearLocal() {
             localStorage.clear();
-            $("#clear").prop("disabled", true);
+           // $("#clear").prop("disabled", true);
             location.replace("MainPageGuest.html");
         }
 
@@ -125,7 +131,8 @@
             CustId = localStorage["customer_Id"];
             console.log("multchecks: ", multchecks)
 
-            //ajaxCall("PUT", "/api/CustLight/?id= " + 1052 + "&arr=" + multchecks, "", PostSuccess, PostError)
+           // ajaxCall("PUT", "/api/CustLight/?id= " + CustId + "&arr=" + multchecks, "", PostSuccess, PostError)
+           
             $.ajax({
                 type: "PUT",
                 url: "/api/CustLight/?id= " + CustId + "&arr=" + JSON.stringify(multchecks),
@@ -134,8 +141,7 @@
                 data: "",
                 success: PostSuccess,
                 error: PostError
-            });
-
+            }); 
             console.log("after ajax ")
 
         }
@@ -172,22 +178,23 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav" id="navbar-nav2">
 
                             <li class="nav-item">
                                 <a class="nav-link active" href="Preferences.html">Preferences</a>
                             </li>
-                            <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <a class="nav-link active" href="SignIn.html">SignIn</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
+                            </li>-->
+                            <li class="nav-item">
+                                <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                             </li>
                         </ul>
                     </div>

@@ -1,0 +1,52 @@
+﻿/*.col-sm-4 
+{
+
+    margin:1px;
+}
+*/
+
+.organic{ text-align:center;}
+.funded {
+    text-align: center;
+}
+
+#search {
+    background-color: #0094ff;
+    /*  text-align: center;
+    align-content: center;*/
+   
+}
+
+
+.CatSearch {
+    text-align: center;
+   
+    
+}
+
+.nav-item a:hover {
+    background-color: #0094ff;
+    color: black;
+}
+
+.navbar-brand a:hover {
+    background-color: #0094ff;
+    color: black;
+}
+
+.container-fluid a:hover {
+    background-color: #0094ff;
+    color: black;
+}
+
+
+
+
+
+
+
+/*form*/
+
+
+
+

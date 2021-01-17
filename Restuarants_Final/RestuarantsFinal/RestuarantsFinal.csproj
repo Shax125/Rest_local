@@ -185,6 +185,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Pages\CustomerRegister.html" />
+    <Content Include="Pages\Main.css" />
     <Content Include="Pages\MainPageGuest.html" />
     <Content Include="Pages\Manager.html" />
     <Content Include="Pages\Preferences.html" />
