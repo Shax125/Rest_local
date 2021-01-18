@@ -5,6 +5,7 @@ namespace RestuarantsFinal.Models
 {
     public class Business
     {
+        int id;
         string name;
         string img;
         float rating;
@@ -13,6 +14,7 @@ namespace RestuarantsFinal.Models
         string phone;
         int priceRange;
 
+        public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Img { get => img; set => img = value; }
         public float Rating { get => rating; set => rating = value; }
@@ -22,8 +24,9 @@ namespace RestuarantsFinal.Models
         public int PriceRange { get => priceRange; set => priceRange = value; }
 
 
-        public Business(string name, string img, float rating, string category, string address, string phone, int priceRange)
+        public Business(int id, string name, string img, float rating, string category, string address, string phone, int priceRange)
         {
+            Id = id;
             Name = name;
             Img = img;
             Rating = rating;
@@ -42,6 +45,13 @@ namespace RestuarantsFinal.Models
         {
             DBService dbs = new DBService();
             List<Business> RList = dbs.getRestaurants(categoryfromuser);
+            return RList;
+        }
+
+        public List<Business> getRestaurantsWithoutCampaign()
+        {
+            DBService dbs = new DBService();
+            List<Business> RList = dbs.getRestaurantsWithoutCampaign();
             return RList;
         }
 

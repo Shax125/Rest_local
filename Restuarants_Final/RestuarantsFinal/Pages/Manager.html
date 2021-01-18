@@ -13,7 +13,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!--<link href="Main.css" rel="stylesheet" />-->
+    <link href="Main.css" rel="stylesheet" />
     <title></title>
     <script>
         var campain;
@@ -22,15 +22,17 @@
         $(document).ready(function ()
         {
 
-
             getcampain();
-         
+            getRestaurantsWithoutCampaign();
+
+
             $("#viewandedit").submit(function (e) {
                 e.preventDefault();
                 middle();
             });
 
-            $('#Addcampaign').click(addnewcampaign)
+
+            
 
         });
 
@@ -83,32 +85,62 @@
 
         });
 
-        function middle() {
-            submitcampaignbudget();
-            return false;
+        function getRestaurantsWithoutCampaign() {
+            ajaxCall("GET", "/api/Business", "", getSuccessrest, errorrest);
+
+        }
+
+        function getSuccessrest(data) {
+
+
+            $('#Addcampaign').click(addnewcampaign(data))
+        }
+
+        function errorrest(ex) {
+            console.log(ex);
+        }
+
+        function addnewcampaign(data) {
            
+            $("#addrestuarantPH").show();
+
+
+            formbuilder = "";
+            formbuilder += '<form id="dropdownrestaurants"> <label for="rest">Choose a restaurant ID:</label> <select name="rest" id="rest"> ';
+            for (var i = 0; i < data.length; i++)
+            {
+                formbuilder += ' <option id="' + data[i].Id + '">' + data[i].Id + '</option> '
+            }
+            formbuilder += ' </select> </br></br><label for="budget">Budget: </label>    <input type="text" id="budgetid" name="budget"> </form> </br> <button onclick="submitnewcampaign()" id="submitcampaign"> Submit new campaign </button> ';
+
+            $("#addrestuarantPH").html(formbuilder);
         }
 
-        function addnewcampaign() {
+        function submitnewcampaign() {
 
-            $("#addrestuarantPH").toggle();
+            var budg = $("#budgetid").val();
+            var rest = $("#rest").val();
 
-            str2 = "";
-            str2 += "<form id='addcampaign' >"
-            str2 += "<label for='id'> ID: </label >";
-            str2 += "<input type='text' id='idadd' name='id'/><br><br>";
-            str2 += "<label for='budget'> Budget: </label > ";
-            str2 += "<input type='text' id='budgetadd' name='budget' /><br><br>";
-            str2 += "<label for= 'idr'> Id Restaurant: </label > ";
-            str2 += "<input type='text' id='idrestaurantsadd' name='idr' /><br><br>"
-            str2 += "<input type='submit' value='Submit'> </form>";
+            console.log("budgetid ", budg);
+            console.log("restid ", rest);
 
-            $("#addrestuarantPH").html(str2);
+            let newcampaign = {
+                Idr: rest,
+                Budjet: budg //why we wrote it with j ?!?!?!!? fucking j !!! 
+            }
+
+            ajaxCall("POST", "/api/Campaign", JSON.stringify(newcampaign), PostSuccessCampaign, PostErrorCampaign)
+
         }
 
-        function submitcampaignbudget() {
-            var r = $("#budget").val();
-            console.log("unupdateBfunc", r);
+        function PostSuccessCampaign(){
+            console.log("InSuccess");
+            location.reload();
+            return false;
+        }
+
+        function PostErrorCampaign(ex) {
+            console.log(ex);
         }
 
         function getcampain() {
@@ -135,85 +167,16 @@
         }
 
         function getSuccess(campaindata) {
+            console.log(campaindata);
 
-            campain = campaindata; // keep the cars array in a global variable;
-            //try {
-            //    tbl = $('#campainTable').DataTable({
-            //        data: campain,
-            //        pageLength: 5,
-            //        columns: [
-            //            {
-            //                render: function (data, type, row, meta) {
-            //                    let datacampain = "data-CampainId='" + row.Id + "'";
 
-            //                    editBtn = "<button type='button' class = 'editBtn btn btn-success' " + datacampain + "> Edit </button>";
-            //                    viewBtn = "<button type='button' class = 'viewBtn btn btn-info' " + datacampain + "> View </button>";
-            //                    deleteBtn = "<button type='button' class = 'deleteBtn btn btn-danger' " + datacampain + "> Delete </button>";
-            //                    return editBtn + viewBtn + deleteBtn;
-            //                }
-            //            },
-            //            { data: "Id" },
-            //            { data: "Budjet" },
-            //            { data: "Balance" },
-            //            { data: "ClickCounter" },
-            //            { data: "ViewCounter" },
-            //            { data: "Status" },
-
-            //        ],
-            //    });
-            //    // buttonEvents();
-            //}
-
-            //catch (err) {
-            //    alert(err);
-            //}
-            str = ""
-            for (var i = 0; i < campaindata.length; i++) {
-
-                str += "<tr role='row' class='odd'>";
-                str += '<td class="sorting_1">';
-                str += '<button type="button" class="editBtn btn btn-success" data-CampainId="' + campaindata[i].Id + '"> Edit </button>';
-                str += '<button type="button" class="viewBtn btn btn-info" data-CampainId="' + campaindata[i].Id + '"> View </button>';
-                str += '<button type="button" class="deleteBtn btn btn-danger" data-CampainId="' + campaindata[i].Id + '"> Delete </button>';
-                str += '</td>';
-                str += ' <td>' + campaindata[i].Id + '</td>';
-                str += ' <td>' + campaindata[i].Budjet + '</td>';
-                str += ' <td>' + campaindata[i].Balance + '</td>';
-                str += ' <td>' + campaindata[i].Clickcounter + '</td>';
-                str += ' <td>' + campaindata[i].Viewcounter + '</td>';
-                str += ' <td>' + campaindata[i].Status + '</td>';
-                str += ' </tr>';
-
-            }
-
-            $("#tbody1").append(str);
+          
         }
 
         function error(err) {
             swal("Error: " + err);
         }
 
-        $("#addcampaign").submit(function (e) {
-            e.preventDefault();
-            submitnewcampaign();
-           
-        });
-
-        function submitnewcampaign() {
-
-
-            sendcampaign();
-            return false;
-
-        }
-
-        function sendcampaign() {
-
-            console.log("id ", $("#idadd").val());
-            console.log("budget ", $("#budgetadd").val());
-            console.log("res ",$("#idrestaurantsadd").val());
-
-        }
 
 
     </script>
@@ -222,57 +185,22 @@
 
 
 
-    <div>
+    
 
-        <button id="Addcampaign">Add new campaign</button>
-        <form id="pForm">
-            <div id="campainTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    
+    
+                    
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <table id="campainTable" class="display nowrap dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="campainTable_info">
-                            <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc" tabindex="0" aria-controls="campainTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label=": activate to sort column descending" style="width: 175px;"></th>
-                                    <th class="sorting" tabindex="0" aria-controls="campainTable" rowspan="1" colspan="1" aria-label="Id: activate to sort column ascending" style="width: 13px;">Id</th>
-                                    <th class="sorting" tabindex="0" aria-controls="campainTable" rowspan="1" colspan="1" aria-label="Manufacturer: activate to sort column ascending" style="width: 89px;">Budjet</th>
-                                    <th class="sorting" tabindex="0" aria-controls="campainTable" rowspan="1" colspan="1" aria-label="Model: activate to sort column ascending" style="width: 41px;">Balance</th>
-                                    <th class="sorting" tabindex="0" aria-controls="campainTable" rowspan="1" colspan="1" aria-label="Year: activate to sort column ascending" style="width: 30px;">ClickCounter</th>
-                                    <th class="sorting" tabindex="0" aria-controls="campainTable" rowspan="1" colspan="1" aria-label="Price: activate to sort column ascending" style="width: 35px;">ViewCounter</th>
-                                    <th class="sorting" tabindex="0" aria-controls="campainTable" rowspan="1" colspan="1" aria-label="Color: activate to sort column ascending" style="width: 37px;">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody1">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-
-
-                <div class="row">
-                    <div class="col-sm-5">
-                        <div class="dataTables_info" id="campainTable_info" role="status" aria-live="polite">
-                            Showing 1 to 5 of 6 entries
-                        </div>
-                    </div><div class="col-sm-7"><div class="dataTables_paginate paging_simple_numbers" id="campainTable_paginate"><ul class="pagination"><li class="paginate_button previous disabled" id="campainTable_previous"><a href="#" aria-controls="campainTable" data-dt-idx="0" tabindex="0">Previous</a></li><li class="paginate_button active"><a href="#" aria-controls="campainTable" data-dt-idx="1" tabindex="0">1</a></li><li class="paginate_button "><a href="#" aria-controls="campainTable" data-dt-idx="2" tabindex="0">2</a></li><li class="paginate_button next" id="campainTable_next"><a href="#" aria-controls="campainTable" data-dt-idx="3" tabindex="0">Next</a></li></ul></div></div>
-                </div>
-            </div>
-
-
-
-
-
-        </form>
-
+        <!--<button id="Addcampaign">Add new campaign</button>-->
 
         <div id="restuarantPH">
+            <br/>________________________________________________________________________________
         </div>
         <div id="addrestuarantPH">
         </div>
 
 
-    </div>
+   
 
 
 </body>

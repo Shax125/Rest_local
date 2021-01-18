@@ -23,8 +23,6 @@ namespace RestuarantsFinal.Controllers
         public int Post([FromBody] Customer cust)
         {
            return cust.InsertCust();
-
-
         }
 
         // PUT api/<controller>/5

@@ -64,8 +64,6 @@ namespace RestuarantsFinal.Models
         {
             DBService dbs = new DBService(); //so we can use the function there
             return dbs.InsertCustomer(this);
-
-            // return dbs.InsertCustomer(this);
         }
 
 

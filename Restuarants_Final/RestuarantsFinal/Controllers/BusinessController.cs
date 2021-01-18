@@ -19,6 +19,13 @@ namespace RestuarantsFinal.Controllers
             return rList;
         }
 
+        public List<Business> Get()
+        {
+            Business r = new Business();
+            List<Business> rList = r.getRestaurantsWithoutCampaign();
+            return rList;
+        }
+
 
 
         // GET api/<controller>/5

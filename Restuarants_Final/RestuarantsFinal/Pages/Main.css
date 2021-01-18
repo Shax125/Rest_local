@@ -16,7 +16,9 @@
     align-content: center;*/
    
 }
-
+button {
+    margin-left: 5px;
+}
 
 .CatSearch {
     text-align: center;

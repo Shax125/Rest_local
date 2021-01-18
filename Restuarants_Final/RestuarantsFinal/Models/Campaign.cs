@@ -55,6 +55,12 @@ namespace RestuarantsFinal.Models
             dbs.setNotactive(id);
         }
 
+        public int InsertCampaign() //he want to enter himself so no need to pass
+        {
+            DBService dbs = new DBService(); //so we can use the function there
+            return dbs.InsertCampaign(this);
+        }
+
     }
     
 

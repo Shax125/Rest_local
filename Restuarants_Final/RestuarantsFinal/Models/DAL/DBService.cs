@@ -172,7 +172,7 @@ namespace RestuarantsFinal.Models.DAL
             {
                 con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = "SELECT * FROM Campaign_2021A_T4 "; //WHERE Customers_2021A_T4.email = '" + mail + "' AND Customers_2021A_T4.pass_word = '" + password + "'";
+                String selectSTR = "SELECT * FROM Campaign_2021A_T4_1 "; //WHERE Customers_2021A_T4.email = '" + mail + "' AND Customers_2021A_T4.pass_word = '" + password + "'";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -195,6 +195,47 @@ namespace RestuarantsFinal.Models.DAL
                 }
 
                 return cList;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+        }
+
+        public List<Business> getRestaurantsWithoutCampaign()
+        {
+            SqlConnection con = null;
+            List<Business> rList = new List<Business>();
+
+            try
+            {
+                con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
+
+                //Get all restaurants without campaign, (get only id).
+                String selectSTR = "select r.id from Restaurants_2021A_T4 r where r.id not in (select a.idR from Campaign_2021A_T4_1 a) "; 
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+                // get a reader
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {   // Read till the end of the data into a row
+                    Business r = new Business();
+                    r.Id = Convert.ToInt32(dr["id"]);
+
+                    rList.Add(r);
+                }
+
+                return rList;
             }
             catch (Exception ex)
             {
@@ -497,6 +538,60 @@ namespace RestuarantsFinal.Models.DAL
             return str;
         }
 
+        public int InsertCampaign(Campaign cmp)
+        {
+
+            SqlConnection con3;
+            SqlCommand cmd3;
+
+            try
+            {
+                con3 = connect("Igroup44DB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildInsertCommandforInsertCampaign(cmp);      // helper method to build the insert string
+
+            cmd3 = CreateCommand3(cStr, con3);             // create the command
+
+            try
+            {
+                int numEffected = cmd3.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+                //throw new Exception("same primary key");
+            }
+
+            finally
+            {
+                if (con3 != null)
+                {
+                    // close the db connection
+                    con3.Close();
+                }
+            }
+
+        }
+
+        private String BuildInsertCommandforInsertCampaign(Campaign cmp)
+        {
+            String command;
+
+            String prefix = " INSERT INTO Campaign_2021A_T4_1 " + "([budget], [balance], [clickCounter], [viewCounter], [status], [idR] )  VALUES (" + cmp.Budjet + "," + cmp.Budjet +  "," + 0 + "," + 0 + ", 'Active' , "  + cmp.IdR + " )" ;
+            command = prefix;
+
+            return command;
+        }
+
+      
 
 
     }
