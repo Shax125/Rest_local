@@ -42,16 +42,32 @@ button {
 }
 
 
-/*this position and down contain the check box (in the preferences page) style*/
+/*this position and down contains the check box (in the preferences page) style*/
 
 
 #containerPreferBox {
-   /* background-image: url('../pics/hey.jpg');*/
+    background-image: url('../pics/c2c64b930af48a341c3adef7c659d36e.PNG');
     /* background-color:black;*/
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-attachment: fixed;
+    background-size: cover;
     /*border: 5px solid black;*/
-   
+}
+
+/*#MainPrefer {
+    background-image: url('../pics/12.jpg');*/
+    /* background-color:black;*/
+    /*background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;*/
+    /*border: 5px solid black;*/
+/*}*/
+
+#LBL {
+    font: italic;
+    position: relative;
+    top: 30%;
+    left: 10%;
 }
 #checkIT {
     width: 350px;
@@ -60,7 +76,10 @@ button {
     top:50%;
     left:36%;
  
-       
+    /* border:1px solid black; */ 
+     background-color:wheat;
+     opacity:0.8;
+     border-radius:20px;
     
 }
 
@@ -77,7 +96,7 @@ button {
     font: bold;
     position:relative;
     top:50%;
-    right:10%;
+    right:1%;
 
 }
 #btnSub:hover{background-color:aqua;}
@@ -91,15 +110,43 @@ button {
 
 .container1  {
     position:absolute;
-    top:0px;
-    left:0px;
+    top:29%;
+    left:10%;
 }
 
 
 #checkCol {
+   /* border: 1px solid black;*/
+   
+}
 
+
+#PrefTitle
+{
+   /* position:relative;
+    top:13%;
+    left:33%;*/
+    color:black;
+    font:italic;
+    font-size:28px;
+   /* outline:solid;*/
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
