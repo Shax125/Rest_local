@@ -2,6 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
+   
+    <link rel="stylesheet" href=" https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
@@ -16,29 +18,38 @@
     <link href="Main.css" rel="stylesheet" />
     <title></title>
     <script>
-        var campain;
+        var campaings;
 
 
-        $(document).ready(function ()
-        {
+        $(document).ready(function () {
 
             getcampain();
             getRestaurantsWithoutCampaign();
 
 
-            $("#viewandedit").submit(function (e) {
-                e.preventDefault();
-                middle();
-            });
-
-
             
+
 
         });
 
+        function setCampaingBalance() {
+            //catchid
+            idtosend = $("#id").val();
+            console.log("id to send: ", idtosend)
+            //ajax
+
+
+        }
+
+        $(document).on("click", ".updatebalance", function () {
+            var updateBalance = this.getAttribute('id');
+            console.log("id is:", updateBalance);
+        });
+
+
         $(document).on("click", ".deleteBtn", function () {
             //markSelected(this);
-            var campaingId = this.getAttribute('data-campainId');
+            var campaingId = this.getAttribute('data-campaignId');
             swal({ // this will open a dialouge
                 title: "Are you sure ??",
                 text: "",
@@ -47,45 +58,51 @@
                 dangerMode: true
             })
                 .then(function (willDelete) {
-                    if (willDelete) Deletecampain(campaingId);
+                    if (willDelete) {
+                        Deletecampain(campaingId)
+                    }
                     else swal("Not Deleted!");
                 });
         });
 
         $(document).on("click", ".viewBtn", function () {
-            //markSelected(this);
-            var campaignId = this.getAttribute('data-campainId');
-            console.log("in View: ", campain);
+            var campaignId = this.getAttribute('data-campaignId');
             str1 = "";
-            console.log("obj: ", campain[campaignId])
             var c;
-            $("#restuarantPH").toggle();
-            for (var i = 0; i < campain.length; i++) {
-                if (campain[i].Id == campaignId)
+            //$("#restuarantPH").toggle();
+            for (var i = 0; i < campaings.length; i++) {
+                if (campaings[i].Id == campaignId)
                     c = i
             }
-            $("#restuarantPH").text("");
-            str1 += "<form id='viewandedit'>"
+            $("#CampaignPH").text("");
+            
             str1 += "<label for='id'> ID: </label >";
-            str1 += "<input type='text' id='id' name='id' disabled value='" + campain[c].Id + "'/><br><br>";
+            str1 += "<input type='text' id='id' name='id' disabled value='" + campaings[c].Id + "'/><br><br>";
             str1 += "<label for='budget'> Budget: </label > ";
-            str1 += "<input type='text' id='budget' name='budget' value='" + campain[c].Budjet + "'/><br><br>";
+            str1 += "<input type='text' id='budget' name='budget' value='" + campaings[c].Budjet + "'/><br><br>";
             str1 += "<label for='balance'> Balance: </label > ";
-            str1 += "<input type='text' id='balance' name='balance' disabled value='" + campain[c].Balance + "'/><br><br>";
+            str1 += "<input type='text' id='balance' name='balance' disabled value='" + campaings[c].Balance + "'/><br><br>";
             str1 += "<label for='clickCounter'> Click Counter: </label > ";
-            str1 += "<input type='text' id='clickCounter' name='clickCounter' disabled value='" + campain[c].Clickcounter + "'/><br><br>";
+            str1 += "<input type='text' id='clickCounter' name='clickCounter' disabled value='" + campaings[c].Clickcounter + "'/><br><br>";
             str1 += "<label for='viewcounter'> view counter: </label > ";
-            str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campain[c].Viewcounter + "'/><br><br>"
+            str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campaings[c].Viewcounter + "'/><br><br>"
             str1 += "<label for= 'idr'> Id Restaurant: </label > ";
-            str1 += "<input type='text' id='idr' name='idr' disabled value='" + campain[c].IdR + "'/><br><br>"
-            str1 += "<input type='submit' value='Submit'> </form>";
+            str1 += "<input type='text' id='idr' name='idr' disabled value='" + campaings[c].IdR + "'/><br><br>"
+            str1 += "<input class='updatebalance' type='button' value='Update Balance' id= " + campaings[c].Id + "> ";
 
-            $("#restuarantPH").html(str1);
+            $("#CampaignPH").html(str1);
 
 
         });
 
+<<<<<<< HEAD
         function getRestaurantsWithoutCampaign() { //will get the resturants to the "select-option"
+=======
+
+
+
+        function getRestaurantsWithoutCampaign() {
+>>>>>>> 42700e2eaaa3a1a672d3c6c22b0b59fa3792bfd3
             ajaxCall("GET", "/api/Business", "", getSuccessrest, errorrest);
 
         }
@@ -101,19 +118,18 @@
         }
 
         function addnewcampaign(data) {
-           
+
             $("#addrestuarantPH").show();
 
 
             formbuilder = "";
             formbuilder += '<form id="dropdownrestaurants"> <label for="rest">Choose a restaurant ID:</label> <select name="rest" id="rest"> ';
-            for (var i = 0; i < data.length; i++)
-            {
+            for (var i = 0; i < data.length; i++) {
                 formbuilder += ' <option id="' + data[i].Id + '">' + data[i].Id + '</option> '
             }
             formbuilder += ' </select> </br></br><label for="budget">Budget: </label>    <input type="text" id="budgetid" name="budget"> </form> </br> <button onclick="submitnewcampaign()" id="submitcampaign"> Submit new campaign </button> ';
 
-            $("#addrestuarantPH").html(formbuilder);
+            $("#addrestuarantPH").append(formbuilder);
         }
 
         function submitnewcampaign() {
@@ -126,14 +142,14 @@
 
             let newcampaign = {
                 Idr: rest,
-                Budjet: budg //why we wrote it with j ?!?!?!!? fucking j !!! 
+                Budjet: budg //why we wrote it with j ?!?!?!!? fucking j !!!
             }
 
             ajaxCall("POST", "/api/Campaign", JSON.stringify(newcampaign), PostSuccessCampaign, PostErrorCampaign)
 
         }
 
-        function PostSuccessCampaign(){
+        function PostSuccessCampaign() {
             console.log("InSuccess");
             location.reload();
             return false;
@@ -153,13 +169,11 @@
         }
 
         function deleteSuccess(campaindata) {
-            //tbl.clear();
-            $("#tbody1").text(" ");
-            getcampain();
-            //redrawTable(tbl, campaindata);
-            //buttonEvents(); // after redrawing the table, we must wire the new buttons
-            //$("#editDiv").hide();
-            swal("Deleted Successfuly!", "Great Job", "success");
+           
+            //getcampain();
+            { swal("Deleted Successfuly!", "Great Job", "success"); }
+            location.reload();
+            return false;
         }
 
         function deleterror(err) {
@@ -168,9 +182,55 @@
 
         function getSuccess(campaindata) {
             console.log(campaindata);
+            campaings = campaindata;
+           
+            $('#serviceTable').DataTable({
+                responsive: true,
+                aaData: campaings,
+                bJQueryUI: true,
+                aoColumns: [
+                    {
+                        render: function (data, type, row, meta) {
+                            let dataCampaing = "data-campaignId='" + row.Id + "'";
+
+                            editBtn = "<button type='button' class = 'editBtn btn btn-success' " + dataCampaing + "> Edit </button>";
+                            viewBtn = "<button type='button' class = 'viewBtn btn btn-info' " + dataCampaing + "> View </button>";
+                            deleteBtn = "<button type='button' class = 'deleteBtn btn btn-danger' " + dataCampaing + "> Delete </button>";
+                            return editBtn + viewBtn + deleteBtn;
+                        }
+                    },
+                    {
+                        mData: 'Id'
+                    },
+
+                    {
+                        mData: 'Budjet'
+                    },
+
+                    {
+                        mData: 'Balance'
+                    },
+                    {
+                        mData: 'Clickcounter'
+                    },
+                    {
+                        mData: 'Viewcounter'
+                    },
+                    {
+                        mData: 'Status'
+                    },
+                    {
+                        mData: 'IdR'
+                    }
+                ]
+            });
 
 
-          
+
+           
+
+
+
         }
 
         function error(err) {
@@ -185,23 +245,48 @@
 
 
 
-    
 
-                    
-    
-                    
+    <table id="serviceTable" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th></th>
+                <th data-field="Id">Id</th>
+                <th data-field="Budjet">Budjet</th>
+                <th data-field="Balance">Balance</th>
+                <th data-field="Clickcounter">Click Counter</th>
+                <th data-field="Viewcounter">View Counter</th>
+                <th data-field="Status">Status</th>
+                <th data-field="IdR">Restaurant ID</th>
+            </tr>
+        </thead>
+    </table>
 
-        <!--<button id="Addcampaign">Add new campaign</button>-->
+    <div id="CampaignPH">
 
+    </div>
+    <!--<button id="Addcampaign">Add new campaign</button>-->
+    <div id="addrestuarantPH">
+        ________________________________________________________________________________
+        <br /><h2>Add New Campaign</h2>
+    </div>
+
+
+
+
+
+
+
+<<<<<<< HEAD
         <div id="restuarantPH">
             <br/>
             <hr style="border:0.5px solid gray" />
         </div>
         <div id="addrestuarantPH">
         </div>
+=======
+>>>>>>> 42700e2eaaa3a1a672d3c6c22b0b59fa3792bfd3
 
 
-   
 
 
 </body>
