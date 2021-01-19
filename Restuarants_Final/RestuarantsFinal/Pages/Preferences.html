@@ -93,10 +93,12 @@
 
         function getSuccess(data) {
             console.log(data);
-
+           
             str = "";
-            str += "<div id='containerPreferBox'class='container'>";
+            str += "<div id='containerPreferBox'class='p-5 text-center bg-image'>";
+         
             str += "<div id='checkIT' class='row'>";
+            str += "<h3 class='display-4 font-weight-bold fonting' id='PrefTitle'>Choose your prefernces</h3>";
             for (var i = 0; i < data.length; i++) {
                 str += "<div id='checkCol' class=' col-sm-6 '>"
                
@@ -106,7 +108,7 @@
                 str += "<span class='CheckB'></span>"
                 str+="</label>"
                
-                str += ' <label  for="highlights"> ' + data[i].HighlightName + '</label><br><br>';
+                str += ' <h5 id="LBL"  for="highlights"> ' + data[i].HighlightName + '</h5><br><br>';
                 
                
                 str += "</div>";
@@ -219,7 +221,7 @@
             </nav>
             <!-- Navbar -->
             <!-- Background image -->
-            <div class="p-5 text-center bg-image"
+            <!--<div id="MainPrefer" class="p-5 text-center bg-image"
                  style=" background-image: url('https://i.pinimg.com/originals/c2/c6/4b/c2c64b930af48a341c3adef7c659d36e.png'); height: 400px; margin-top: 58px; ">
                 <div class="mask" style="background-color: rgba(0, 0, 0, 0); margin-top:100px">
                     <div class="d-flex justify-content-center align-items-center h-100">
@@ -229,7 +231,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <br /><br /><br />
             <!-- Background image -->
         </header>
@@ -244,7 +246,7 @@
     </section>
 
 
-    <div>adam</div>
+    <!--<div>adam</div>-->
 
 </body>
 
