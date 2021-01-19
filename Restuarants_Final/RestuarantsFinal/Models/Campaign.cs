@@ -61,6 +61,13 @@ namespace RestuarantsFinal.Models
             return dbs.InsertCampaign(this);
         }
 
+        public void setbadget(int id, int newbadget)
+        {
+            DBService dbs = new DBService();
+            dbs.setbadget(id, newbadget);
+        }
+   
+
     }
     
 

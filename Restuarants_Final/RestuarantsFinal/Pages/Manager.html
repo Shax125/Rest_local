@@ -26,10 +26,6 @@
             getcampain();
             getRestaurantsWithoutCampaign();
 
-
-            
-
-
         });
 
         function setCampaingBalance() {
@@ -41,12 +37,12 @@
 
         }
 
-        $(document).on("click", ".updatebalance", function () {
-            var updateBalance = this.getAttribute('id');
-            var balance = $("#balance").val();
-            console.log("id is:", updateBalance, "and balance is: ", balance);
+        $(document).on("click", ".updatebudget", function () {
+            var updatebudget = this.getAttribute('id');
+            var budget = $("#budget").val();
+            console.log("id is:", updatebudget, "and budget is: ", budget);
 
-
+            ajaxCall("PUT", "/api/Campaign/?id=" + updatebudget + "&newbadget=" + budget, "", updateSuccess, updaterror);
 
         });
 
@@ -69,7 +65,7 @@
                 });
         });
 
-        $(document).on("click", ".viewBtn", function () {
+        $(document).on("click", ".editBtn", function () {
             var campaignId = this.getAttribute('data-campaignId');
             str1 = "";
             var c;
@@ -92,13 +88,49 @@
             str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campaings[c].Viewcounter + "'/><br><br>"
             str1 += "<label for= 'idr'> Id Restaurant: </label > ";
             str1 += "<input type='text' id='idr' name='idr' disabled value='" + campaings[c].IdR + "'/><br><br>"
-            str1 += "<input class='updatebalance' type='button' value='Update Balance' id= " + campaings[c].Id + "> ";
+            str1 += "<input class='updatebudget' type='button' value='Update Budget' id= " + campaings[c].Id + "> ";
+            str1 += "<input type='button' id= 'cancel' value='Cancel' >";
 
             $("#CampaignPH").html(str1);
 
 
         });
 
+        $(document).on("click", ".viewBtn", function () {
+            var campaignId = this.getAttribute('data-campaignId');
+            str1 = "";
+            var c;
+            //$("#restuarantPH").toggle();
+            for (var i = 0; i < campaings.length; i++) {
+                if (campaings[i].Id == campaignId)
+                    c = i
+            }
+            $("#CampaignPH").text("");
+
+            str1 += "<label for='id'> ID: </label >";
+            str1 += "<input type='text' id='id' name='id' disabled value='" + campaings[c].Id + "'/><br><br>";
+            str1 += "<label for='budget'> Budget: </label > ";
+            str1 += "<input type='text' id='budget' name='budget' disabled value='" + campaings[c].Budjet + "'/><br><br>";
+            str1 += "<label for='balance'> Balance: </label > ";
+            str1 += "<input type='text' id='balance' name='balance' disabled value='" + campaings[c].Balance + "'/><br><br>";
+            str1 += "<label for='clickCounter'> Click Counter: </label > ";
+            str1 += "<input type='text' id='clickCounter' name='clickCounter' disabled value='" + campaings[c].Clickcounter + "'/><br><br>";
+            str1 += "<label for='viewcounter'> view counter: </label > ";
+            str1 += "<input type='text' id='viewcounter' name='viewcounter' disabled value='" + campaings[c].Viewcounter + "'/><br><br>"
+            str1 += "<label for= 'idr'> Id Restaurant: </label > ";
+            str1 += "<input type='text' id='idr' name='idr' disabled value='" + campaings[c].IdR + "'/><br><br>"
+            str1 += "<input type='button' id= 'cancel' value='Cancel' >"
+            
+
+            $("#CampaignPH").html(str1);
+
+
+        });
+
+        $(document).on("click", "#cancel", function () {
+
+            $('#CampaignPH').html("")
+        });
 
         function getRestaurantsWithoutCampaign() {
 
@@ -234,6 +266,18 @@
 
         function error(err) {
             swal("Error: " + err);
+        }
+        
+        function updateSuccess(data) {
+            console.log(data)
+            { swal("Update Successfuly!", "Great Job", "success"); }
+            location.reload();
+            return false;
+
+        }
+
+        function updaterror(ex) {
+            console.log(ex)
         }
 
 

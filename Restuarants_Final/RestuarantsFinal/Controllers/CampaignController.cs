@@ -45,5 +45,14 @@ namespace RestuarantsFinal.Controllers
             List<Campaign> cList = c.getcampains();
             return cList;
         }
+
+        public void Put(int id, int newbadget)
+        {
+            Campaign c = new Campaign();
+            c.setbadget(id, newbadget);
+
+        }
+
+    
     }
 }

@@ -591,7 +591,62 @@ namespace RestuarantsFinal.Models.DAL
             return command;
         }
 
-      
+        public int setbadget(int id, int newbadget)
+        {
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("Igroup44DB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            String cStr = BuildInsertCommand(id, newbadget);      // helper method to build the insert string
+
+            cmd = CreateCommand(cStr, con);             // create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected; //return how many row's effected.
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw (ex);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+
+                }
+            }
+
+        }
+
+        private String BuildInsertCommand(int id, int newbadget) //The second C
+        {
+            String command;
+
+            StringBuilder sb = new StringBuilder();
+            // use a string builder to create the dynamic string
+            //sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", business.Id, business.Name, business.Img, business.Rating, business.Category, business.Address, business.Phone, business.PriceRange);
+            String prefix = "UPDATE Campaign_2021A_T4_1 SET budget ="+ newbadget+" WHERE id= " + id;
+            command = prefix;
+
+            return command;
+        }
+
+
 
 
     }
