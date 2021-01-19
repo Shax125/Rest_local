@@ -301,7 +301,6 @@ namespace RestuarantsFinal.Models.DAL
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
             //sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", business.Id, business.Name, business.Img, business.Rating, business.Category, business.Address, business.Phone, business.PriceRange);
-            String prefix = "UPDATE Campaign_2021A_T4 SET Status = 'NotActive' WHERE id= "+ id;
             command = prefix;
 
             return command;
