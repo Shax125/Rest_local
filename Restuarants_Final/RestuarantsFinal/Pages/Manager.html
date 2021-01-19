@@ -43,7 +43,11 @@
 
         $(document).on("click", ".updatebalance", function () {
             var updateBalance = this.getAttribute('id');
-            console.log("id is:", updateBalance);
+            var balance = $("#balance").val();
+            console.log("id is:", updateBalance, "and balance is: ", balance);
+
+
+
         });
 
 
