@@ -70,10 +70,13 @@
             return false;
 
         }
-        function GetSuccess(data) {
-            console.log(data)
+        function GetSuccess(data) { 
+            //console.log(data)
+
+            
+
             var str = "";
-            document.getElementById("ph2").innerHTML = "";
+            document.getElementById("ph1").innerHTML = "";
 
 
             str += "<div class='container'>";
@@ -105,25 +108,250 @@
 
 
 
+               
 
+            }
+
+            
+
+            str += "</div>";// for row
+            str += "</div>";// for container
+            $("#ph1").append(str);
+
+            GetFund()// רינודר ממומן ללא העדפות
+
+        }
+        function GetError(ex) {
+            console.log(ex);
+            }
+
+
+        function getr() { // for organic area
+
+            var category = $("#category").val();
+            console.log(category);
+            if (localStorage["customer_Id"] == null) {// הבאה לאורגני ללא העדפות
+                ajaxCall("GET", "/api/Business?categoryfromuser=" + category, "", GetSuccess, GetError);
+            }
+            else
+            {// הבאה לאורגני לפי העדפות
+                Id = '';
+                Id =localStorage["customer_Id"];
+                ajaxCall("GET", "/api/Business?categoryPrefer=" + category + "&id="+Id , "", GetSuccessPrefer, GetErrorPrefer);
+            }
+
+        }
+
+        function GetSuccessPrefer(data) {
+            //alert("success");
+           // console.log(data)
+            
+
+            var str = "";
+            document.getElementById("ph1").innerHTML = "";
+           
+
+            console.log("data of prefer not funded");
+            console.log(data);
+
+            //Rander Otta- רנדר אותה
+
+
+
+            str += "<div class='container'>";
+            str += "<div class='row'>";
+
+
+            for (var i = 0; i < data.length; i++) {
+
+
+
+                if (data.length <= 2) {
+                    str += "<div class='card col-sm-6 ' style ='width: 18rem ;'>";
+                }
+                else
+                {
+                    str += "<div class='card col-sm-4 ' style ='width: 18rem ;'>";
+                }
+                str += "<img class='card-img-top'  src=" + data[i].Img + " alt='Card image cap'>"
+                str += "<div class='card-body'>"
+                str += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+
+
+                str += "<ul class='list-group list-group-flush'>";
+                str += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                str += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                str += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                str += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
+                str += "</ul>";
+                str += "</div>"
+                str += "</div>";
+                str += "</br>";
 
             }
 
             str += "</div>";// for row
             str += "</div>";// for container
             $("#ph1").append(str);
+            GetFundPrefer() // רנדור ממומן לפי העדפות
 
         }
-        function GetError(ex) {
-            console.log(ex);
-        }
-        function getr() {
 
+        function GetErrorPrefer(ex) {
+            alert("error");
+            console.log(ex)
+        }
+
+
+
+        // כאן יהיה הגט של הקידום הממומן ללא העדפות
+        function GetFund()
+        { 
             var category = $("#category").val();
-            console.log(category);
-            ajaxCall("GET", "/api/Business?categoryfromuser=" + category, "", GetSuccess, GetError);
+            ajaxCall("GET", "/api/Business?categoryFund=" + category, "", GetSuccessFund, GetErrorFund);
+
 
         }
+
+
+            function GetSuccessFund(data)
+            {
+                console.log("data of only funded");
+                console.log(data);
+
+                var str2 = "";
+                document.getElementById("ph2").innerHTML = "";
+
+
+
+
+                //Rander Otta- רנדר אותה
+
+
+
+                str2 += "<div class='container'>";
+                str2 += "<div class='row'>";
+
+
+                for (var i = 0; i < data.length; i++) {
+
+
+
+                    if (data.length <= 2) {
+                        str2 += "<div class='card col-sm-6 ' style ='width: 18rem ;'>";
+                    }
+                    else {
+                        str2 += "<div class='card col-sm-4 ' style ='width: 18rem ;'>";
+                    }
+                    str2 += "<img class='card-img-top'  src=" + data[i].Img + " alt='Card image cap'>"
+                    str2 += "<div class='card-body'>"
+                    str2 += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+
+
+                    str2 += "<ul class='list-group list-group-flush'>";
+                    str2 += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                    str2 += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                    str2 += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                    str2 += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
+                    str2 += "</ul>";
+                    str2 += "</div>"
+                    str2 += "</div>";
+                    str2 += "</br>";
+
+                }
+
+                str2 += "</div>";// for row
+                str2 += "</div>";// for container
+                $("#ph2").append(str2);
+
+
+
+            }
+
+
+            function GetErrorFund(data) { alert("Error in Founded without prefernces") }
+
+
+
+         // כאן יהיה הגט של הקידום הממומן עם העדפות!!
+
+
+        function GetFundPrefer()
+        {
+            //alert("Show me the Data");
+            //console.log("data of fund"+data);
+            var category = $("#category").val();
+            Id = '';
+            Id = localStorage["customer_Id"];
+            ajaxCall("GET", "/api/Business?categoryPreferFund=" + category + "&id=" + Id, "", GetSuccessPreferFund, GetErrorPreferFund);
+
+        }
+
+
+        function GetSuccessPreferFund(data)
+        {
+            alert("success funded")
+            
+            console.log("data of prefer funded");
+            console.log(data);
+
+
+            var str2 = "";
+            document.getElementById("ph2").innerHTML = "";
+           
+
+
+
+            //Rander Otta- רנדר אותה
+
+
+
+            str2 += "<div class='container'>";
+            str2 += "<div class='row'>";
+
+
+            for (var i = 0; i < data.length; i++) {
+
+
+
+                if (data.length <= 2) {
+                    str2 += "<div class='card col-sm-6 ' style ='width: 18rem ;'>";
+                }
+                else {
+                    str2 += "<div class='card col-sm-4 ' style ='width: 18rem ;'>";
+                }
+                str2 += "<img class='card-img-top'  src=" + data[i].Img + " alt='Card image cap'>"
+                str2 += "<div class='card-body'>"
+                str2 += "<h3 class='card-title'>" + data[i].Name + "</h3>";
+
+
+                str2 += "<ul class='list-group list-group-flush'>";
+                str2 += "<li class='list-group-item'>  <b>Address:</b> " + data[i].Address + "</li>"
+                str2 += "<li class='list-group-item'> <b>Phone:</b> " + data[i].Phone + "</li>"
+                str2 += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
+                str2 += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
+                str2 += "</ul>";
+                str2 += "</div>"
+                str2 += "</div>";
+                str2 += "</br>";
+
+            }
+
+            str2 += "</div>";// for row
+            str2 += "</div>";// for container
+            $("#ph2").append(str2);
+
+
+
+
+            }
+
+
+
+        function GetErrorPreferFund(data)
+        { alert("error in funded"); }
+
+
 
 
 
@@ -218,6 +446,7 @@
         <hr />
 
         <h1 class="funded">VIP</h1>
+        <br />
         <br />
         <div id="ph2">
 

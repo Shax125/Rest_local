@@ -41,12 +41,46 @@ namespace RestuarantsFinal.Models
 
         }
 
+
+        //organic without prefernces
         public List<Business> getRestaurants(string categoryfromuser)
         {
             DBService dbs = new DBService();
             List<Business> RList = dbs.getRestaurants(categoryfromuser);
             return RList;
         }
+
+        //founded without preferences
+        public List<Business> GetFunded(string categoryFund)
+        {
+            DBService dbs = new DBService();
+            List<Business> RList = dbs.GetFunded(categoryFund);
+            return RList;
+        }
+
+
+
+
+
+        //organic with prefernces
+        public List<Business> GetPrefer(string categoryPrefer, int id)
+        {
+            DBService dbs = new DBService();
+            List<Business> RList = dbs.getRestaurantsPrfer(categoryPrefer, id);
+            return RList;
+        }
+
+
+        //funded with preferences
+        public List<Business> GetPreferfund(string categoryPreferFund, int id)
+        {
+            DBService dbs = new DBService();
+            List<Business> RList = dbs.GetPreferfund(categoryPreferFund, id);
+            return RList;
+        }
+
+
+
 
         public List<Business> getRestaurantsWithoutCampaign()
         {
