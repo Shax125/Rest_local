@@ -85,7 +85,7 @@
 
         });
 
-        function getRestaurantsWithoutCampaign() {
+        function getRestaurantsWithoutCampaign() { //will get the resturants to the "select-option"
             ajaxCall("GET", "/api/Business", "", getSuccessrest, errorrest);
 
         }
@@ -194,7 +194,8 @@
         <!--<button id="Addcampaign">Add new campaign</button>-->
 
         <div id="restuarantPH">
-            <br/>________________________________________________________________________________
+            <br/>
+            <hr style="border:0.5px solid gray" />
         </div>
         <div id="addrestuarantPH">
         </div>
