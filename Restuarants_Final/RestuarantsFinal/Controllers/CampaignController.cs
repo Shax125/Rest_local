@@ -33,8 +33,10 @@ namespace RestuarantsFinal.Controllers
         }
 
 
-        //needs to be a route
-        public void Put(int id, string address)
+        //view counter
+        [HttpPut]
+        [Route("api/Campaign/view")]
+        public void PutviewCounter(int id)
         {
             Campaign c = new Campaign();
             c.SetViewCounterAndBalance(id);

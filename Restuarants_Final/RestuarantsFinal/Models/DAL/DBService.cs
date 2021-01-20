@@ -115,11 +115,6 @@ namespace RestuarantsFinal.Models.DAL
             }
         }
 
-
-
-
-
-
         //to organic without prefernces
         public List<Business> getRestaurants(string categoryfromuser)
         {
@@ -169,9 +164,7 @@ namespace RestuarantsFinal.Models.DAL
             }
         }
 
-
         //To Funded without Preferences
-
         public List<Business> GetFunded(string categoryFund)
         {
             SqlConnection con = null;
@@ -221,18 +214,6 @@ namespace RestuarantsFinal.Models.DAL
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         //To organic !With! prefernces
         public List<Business> getRestaurantsPrfer(string categoryPrefer, int id)
         {
@@ -243,7 +224,7 @@ namespace RestuarantsFinal.Models.DAL
             {
                 con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " select * from  HighlightsInRestaurants as R inner join Customer_HighLights_2021A_T4 as C on C.idH = R.idH inner join  Restaurants_2021A_T4 as A on R.idR = A.id  where idC ="+id+" and C.status ="+ 1+" and A.category LIKE '%"+ categoryPrefer + "%'  ";
+                String selectSTR = " select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants as R inner join Customer_HighLights_2021A_T4 as C on C.idH = R.idH inner join  Restaurants_2021A_T4 as A on R.idR = A.id  where idC =" + id+" and C.status ="+ 1+" and A.category LIKE '%"+ categoryPrefer + "%'  ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -252,6 +233,7 @@ namespace RestuarantsFinal.Models.DAL
                 while (dr.Read())
                 {   // Read till the end of the data into a row
                     Business r = new Business();
+                    r.Id= Convert.ToInt32(dr["id"]);
                     r.Name = (string)dr["name"];
                     r.Img = (string)dr["img"];
                     r.Rating = (float)Convert.ToDouble(dr["rating"]);
@@ -282,19 +264,7 @@ namespace RestuarantsFinal.Models.DAL
             }
         }
 
-
-
-
-
-
-
-
-
-
-
         //Funded with preferences
-
-
         public List<Business> GetPreferfund(string categoryPreferFund, int id)
         {
             SqlConnection con = null;
@@ -304,7 +274,7 @@ namespace RestuarantsFinal.Models.DAL
             {
                 con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
 
-                 String selectSTR = "   select * from HighlightsInRestaurants R inner join Customer_HighLights_2021A_T4 C on R.idH=C.idH inner join Restaurants_2021A_T4 A on R.idR=A.id inner join Campaign_2021A_T4_1 P on P.idR=R.idR where A.category LIKE '%"+ categoryPreferFund + "%' and C.idC="+id+" and C.status="+1+ " and P.status='Active'   ";
+                 String selectSTR = " select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants R inner join Customer_HighLights_2021A_T4 C on R.idH=C.idH inner join Restaurants_2021A_T4 A on R.idR=A.id inner join Campaign_2021A_T4_1 P on P.idR=R.idR where A.category LIKE '%" + categoryPreferFund + "%' and C.idC="+id+" and C.status="+1+ " and P.status='Active'   ";
                 //String selectSTR = "select DISTINCT R.id  restaurants_id,C.idC customer_id, R.name restaurants_name from Restaurants_2021A_T4 R inner join HighlightsInRestaurants HR on R.id = HR.idR inner join Customer_HighLights_2021A_T4 C on c.status ="+ 1 + " and c.idH = HR.idH where C.idC ="+ id+ " and R.category LIKE '%"+ categoryPreferFund + "%' and exists( select* from Campaign_2021A_T4_1 CA where CA.idR= R.id and CA.status= 'Active')";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
@@ -314,6 +284,7 @@ namespace RestuarantsFinal.Models.DAL
                 while (dr.Read())
                 {   // Read till the end of the data into a row
                     Business r = new Business();
+                    r.Id = Convert.ToInt32(dr["id"]);
                     r.Name = (string)dr["name"];
                     r.Img = (string)dr["img"];
                     r.Rating = (float)Convert.ToDouble(dr["rating"]);
@@ -322,9 +293,7 @@ namespace RestuarantsFinal.Models.DAL
                     r.Phone = (string)dr["phone"];
                     r.PriceRange = Convert.ToInt32(dr["price_range"]);
 
-                    if (r.Category.Contains(categoryPreferFund))
                         rList.Add(r);
-
                 }
 
                 return rList;
@@ -343,15 +312,6 @@ namespace RestuarantsFinal.Models.DAL
 
             }
         }
-
-
-
-
-
-
-
-
-
 
         public List<Campaign> getcampains()
         {
@@ -836,15 +796,7 @@ namespace RestuarantsFinal.Models.DAL
             return command;
         }
 
-
-
-
-
-
         //update views and balance
-
-
-
         public int SetViewCounterAndBalance(int id)
         {
             SqlConnection con;
@@ -900,16 +852,7 @@ namespace RestuarantsFinal.Models.DAL
             return command;
         }
 
-
-
-
-
-
-
-
         //update Clicks And balance
-
-
         public int PutClickCounter(int id)
         {
             SqlConnection con;
@@ -964,8 +907,6 @@ namespace RestuarantsFinal.Models.DAL
 
             return command;
         }
-
-
 
     }
 }
