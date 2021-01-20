@@ -10,13 +10,13 @@ namespace RestuarantsFinal.Models
     {
         int id;
         int budjet;
-        int balance;
+        float balance;
         int clickcounter;
         int viewcounter;
         string status;
         int idR;
 
-        public Campaign(int id, int budjet, int balance, int clickcounter, int viewcounter, string status, int idR)
+        public Campaign(int id, int budjet, float balance, int clickcounter, int viewcounter, string status, int idR)
         {
             Id = id;
             Budjet = budjet;
@@ -34,7 +34,7 @@ namespace RestuarantsFinal.Models
 
         public int Id { get => id; set => id = value; }
         public int Budjet { get => budjet; set => budjet = value; }
-        public int Balance { get => balance; set => balance = value; }
+        public float Balance { get => balance; set => balance = value; }
         public int Clickcounter { get => clickcounter; set => clickcounter = value; }
         public int Viewcounter { get => viewcounter; set => viewcounter = value; }
         public string Status { get => status; set => status = value; }
@@ -55,6 +55,14 @@ namespace RestuarantsFinal.Models
             dbs.setNotactive(id);
         }
 
+
+        //for update counter view and balance
+        public void SetViewCounterAndBalance(int id)
+        {
+            DBService dbs = new DBService();
+            dbs.SetViewCounterAndBalance(id);
+        }
+
         public int InsertCampaign() //he want to enter himself so no need to pass
         {
             DBService dbs = new DBService(); //so we can use the function there
@@ -66,7 +74,20 @@ namespace RestuarantsFinal.Models
             DBService dbs = new DBService();
             dbs.setbadget(id, newbadget);
         }
-   
+
+
+        //click counter
+
+
+        public void PutClickCounter(int id)
+        {
+            DBService dbs = new DBService();
+            dbs.PutClickCounter(id);
+        }
+
+
+
+
 
     }
     

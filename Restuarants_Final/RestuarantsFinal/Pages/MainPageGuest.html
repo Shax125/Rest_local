@@ -209,6 +209,7 @@
         { 
             var category = $("#category").val();
             ajaxCall("GET", "/api/Business?categoryFund=" + category, "", GetSuccessFund, GetErrorFund);
+            
 
 
         }
@@ -218,6 +219,12 @@
             {
                 console.log("data of only funded");
                 console.log(data);
+
+               
+
+
+
+
 
                 var str2 = "";
                 document.getElementById("ph2").innerHTML = "";
@@ -254,9 +261,15 @@
                     str2 += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
                     str2 += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
                     str2 += "</ul>";
+                    str2 += "<input type='button' onclick='UpdateClickCounter(" + data[i].Id+")' id='" + data[i].Id + "' value='Go To Resturant Site'>"
                     str2 += "</div>"
                     str2 += "</div>";
                     str2 += "</br>";
+                   
+
+                    console.log("shir");
+
+                    ajaxCall("PUT", "/api/Campaign/?id=" + data[i].Id +"&address="+data[i].Address , "", updateSuccessFunded, updaterrorFunded);
 
                 }
 
@@ -268,10 +281,18 @@
 
             }
 
+            
+
 
             function GetErrorFund(data) { alert("Error in Founded without prefernces") }
 
 
+
+            function updateSuccessFunded()
+            { alert("Funded Put success") }
+
+            function updaterrorFunded()
+            {alert("Funded Put failed") }
 
          // כאן יהיה הגט של הקידום הממומן עם העדפות!!
 
@@ -353,6 +374,22 @@
 
 
 
+            //click counter
+
+
+            function UpdateClickCounter(id)
+            {
+                
+                console.log(id);
+                ajaxCall("Put", "/api/Campaign/click?id=" + id , "", updateSuccessFundedClick, updaterrorFundedClick);
+
+            }
+
+
+            function updateSuccessFundedClick(data) { alert("clickCounter of funded not prefer success") }
+
+
+            function updaterrorFundedClick(data) { alert("clickCounter of funded not prefer Fail") }
 
 
     </script>
