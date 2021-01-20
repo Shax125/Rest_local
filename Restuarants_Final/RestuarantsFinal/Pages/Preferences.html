@@ -83,10 +83,6 @@
             location.replace("MainPageGuest.html");
         }
 
-
-
-
-
         function getHighlights() {
             ajaxCall("GET", "/api/Highlight", "", getSuccess, error);
         }
@@ -133,6 +129,7 @@
             submithighlights();
             return false;
         }
+
         function submithighlights() {
             var checks = $('input[type="checkbox"]:checked').map(function () {
                 return $(this).val();
@@ -167,7 +164,8 @@
 
         function PostSuccess(data) {
             console.log(data);
-            alert("add succesfully")
+            alert("add succesfully");
+                
         }
 
         function PostError(ex) {

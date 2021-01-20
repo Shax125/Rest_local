@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
-   
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href=" https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -28,15 +29,6 @@
 
         });
 
-        function setCampaingBalance() {
-            //catchid
-            idtosend = $("#id").val();
-            console.log("id to send: ", idtosend)
-            //ajax
-
-
-        }
-
         $(document).on("click", ".updatebudget", function () {
             var updatebudget = this.getAttribute('id');
             var budget = $("#budget").val();
@@ -45,7 +37,6 @@
             ajaxCall("PUT", "/api/Campaign/?id=" + updatebudget + "&newbadget=" + budget, "", updateSuccess, updaterror);
 
         });
-
 
         $(document).on("click", ".deleteBtn", function () {
             //markSelected(this);
@@ -75,7 +66,7 @@
                     c = i
             }
             $("#CampaignPH").text("");
-            
+
             str1 += "<label for='id'> ID: </label >";
             str1 += "<input type='text' id='id' name='id' disabled value='" + campaings[c].Id + "'/><br><br>";
             str1 += "<label for='budget'> Budget: </label > ";
@@ -120,7 +111,7 @@
             str1 += "<label for= 'idr'> Id Restaurant: </label > ";
             str1 += "<input type='text' id='idr' name='idr' disabled value='" + campaings[c].IdR + "'/><br><br>"
             str1 += "<input type='button' id= 'cancel' value='Cancel' >"
-            
+
 
             $("#CampaignPH").html(str1);
 
@@ -200,7 +191,7 @@
         }
 
         function deleteSuccess(campaindata) {
-           
+
             //getcampain();
             { swal("Deleted Successfuly!", "Great Job", "success"); }
             location.reload();
@@ -214,7 +205,7 @@
         function getSuccess(campaindata) {
             console.log(campaindata);
             campaings = campaindata;
-           
+
             $('#serviceTable').DataTable({
                 responsive: true,
                 aaData: campaings,
@@ -258,7 +249,7 @@
 
 
 
-           
+
 
 
 
@@ -267,13 +258,12 @@
         function error(err) {
             swal("Error: " + err);
         }
-        
+
         function updateSuccess(data) {
             console.log(data)
-            { swal("Update Successfuly!", "Great Job", "success"); }
+            alert("Update Successfuly!"); 
             location.reload();
             return false;
-
         }
 
         function updaterror(ex) {
@@ -285,32 +275,39 @@
     </script>
 </head>
 <body>
+    <div class="container-fluid">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="MainPageGuest.html">Back to restuarants</a>
+        </nav>
 
 
 
 
-    <table id="serviceTable" class="table table-bordered table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th></th>
-                <th data-field="Id">Id</th>
-                <th data-field="Budjet">Budjet</th>
-                <th data-field="Balance">Balance</th>
-                <th data-field="Clickcounter">Click Counter</th>
-                <th data-field="Viewcounter">View Counter</th>
-                <th data-field="Status">Status</th>
-                <th data-field="IdR">Restaurant ID</th>
-            </tr>
-        </thead>
-    </table>
+        <table id="serviceTable" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th data-field="Id">Id</th>
+                    <th data-field="Budjet">Budjet</th>
+                    <th data-field="Balance">Balance</th>
+                    <th data-field="Clickcounter">Click Counter</th>
+                    <th data-field="Viewcounter">View Counter</th>
+                    <th data-field="Status">Status</th>
+                    <th data-field="IdR">Restaurant ID</th>
+                </tr>
+            </thead>
+        </table>
 
-    <div id="CampaignPH">
+        <div id="CampaignPH">
 
-    </div>
-    <!--<button id="Addcampaign">Add new campaign</button>-->
-    <div id="addrestuarantPH">
-        <hr style="border:0.5px solid gray" />     
-        <br /><h2>Add New Campaign:</h2>
+        </div>
+        <!--<button id="Addcampaign">Add new campaign</button>-->
+        <div id="addrestuarantPH">
+            <hr style="border:0.5px solid gray" />
+            <br /><h2>Add New Campaign:</h2>
+        </div>
+        <br />
     </div>
 
 
