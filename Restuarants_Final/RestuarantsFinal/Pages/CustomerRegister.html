@@ -99,7 +99,9 @@
                 Email: $('#email').val(),
                 Phone: $('#phone').val(),
                 Pass: $('#password').val(),
+                Range:$('#PriceRange').val(),
                 Img: NewImg
+
             }
 
 
@@ -195,6 +197,12 @@
             <div class="form-group">
                 <label for="pass">Password:</label>
                 <input type="text" class="form-control" placeholder="Enter your password" id="password" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$" oninvalid="this.setCustomValidity('Please enter a password with at least 8 characters that include at least one capital letter and one number')" oninput="this.setCustomValidity('')" required>
+
+            </div>
+            
+            <div class="form-group">
+                <label for="price_range">price range:</label>
+                <input type="text" class="form-control" placeholder="Enter your limited price range(1-5)" id="PriceRange" pattern="" oninvalid="" oninput="this.setCustomValidity('')" >
 
             </div>
 

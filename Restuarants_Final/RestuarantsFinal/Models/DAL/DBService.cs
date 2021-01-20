@@ -224,7 +224,7 @@ namespace RestuarantsFinal.Models.DAL
             {
                 con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants as R inner join Customer_HighLights_2021A_T4 as C on C.idH = R.idH inner join  Restaurants_2021A_T4 as A on R.idR = A.id  where idC =" + id+" and C.status ="+ 1+" and A.category LIKE '%"+ categoryPrefer + "%'  ";
+                String selectSTR = " select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants as R inner join Customer_HighLights_2021A_T4 as C on C.idH = R.idH inner join  Restaurants_2021A_T4 as A on R.idR = A.id inner join Customers_2021A_T4 O on O.id=C.idC  where idC =" + id+" and C.status ="+ 1+" and A.category LIKE '%"+ categoryPrefer + "%' and O.price_range>=A.price_range   ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -274,7 +274,7 @@ namespace RestuarantsFinal.Models.DAL
             {
                 con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
 
-                 String selectSTR = " select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants R inner join Customer_HighLights_2021A_T4 C on R.idH=C.idH inner join Restaurants_2021A_T4 A on R.idR=A.id inner join Campaign_2021A_T4_1 P on P.idR=R.idR where A.category LIKE '%" + categoryPreferFund + "%' and C.idC="+id+" and C.status="+1+ " and P.status='Active'   ";
+                 String selectSTR = " select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants R inner join Customer_HighLights_2021A_T4 C on R.idH=C.idH inner join Restaurants_2021A_T4 A on R.idR=A.id inner join Campaign_2021A_T4_1 P on P.idR=R.idR  inner join Customers_2021A_T4 O on O.id=C.idC where A.category LIKE '%" + categoryPreferFund + "%' and C.idC="+id+" and C.status="+1+ " and P.status='Active' and O.price_range>=A.price_range    ";
                 //String selectSTR = "select DISTINCT R.id  restaurants_id,C.idC customer_id, R.name restaurants_name from Restaurants_2021A_T4 R inner join HighlightsInRestaurants HR on R.id = HR.idR inner join Customer_HighLights_2021A_T4 C on c.status ="+ 1 + " and c.idH = HR.idH where C.idC ="+ id+ " and R.category LIKE '%"+ categoryPreferFund + "%' and exists( select* from Campaign_2021A_T4_1 CA where CA.idR= R.id and CA.status= 'Active')";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
@@ -587,7 +587,7 @@ namespace RestuarantsFinal.Models.DAL
             }
 
         }
-
+        // arr of prefernces
         private String BuildInsertCommandforPrefernces(int id)
         {
             String command;
@@ -597,9 +597,9 @@ namespace RestuarantsFinal.Models.DAL
 
             for (int i = 1; i < 10; i++)
             {
-                    st += " ( " + id + " , " + i + " , " + 0 + " ), ";
+                    st += " ( " + id + " , " + i + " , " + 1 + " ), ";
             }
-            st += " ( " + id + " , " + 10 + " , " + 0 + " )";
+            st += " ( " + id + " , " + 10 + " , " + 1 + " )";
 
             String prefix = " INSERT INTO Customer_Highlights_2021A_T4 " + "( [idC], [idH], [status] )  VALUES ";
             command = prefix + st;
