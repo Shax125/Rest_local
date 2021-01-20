@@ -11,3 +11,5 @@ from Customer_HighLights_2021A_T4
 select *
 from Highlights_2021A_T4
 
+
+
