@@ -136,21 +136,25 @@ button {
 
 
 
-.clickfund {
+/*.clickfund {
     background-color: #0094ff;
     position: relative;
     left: 37%;
     width:30%;
     height:30%;
+}*/
+
+.btn-outline-primary{
+    position: relative;
+    left: 34% ;
 }
 
 img .card-img-top {
-    width: 10px;
-    height: 10px;
+    height: 30%;
 }
 
 #pForme {
-    background-color: blue;
+    
 }
 
 
