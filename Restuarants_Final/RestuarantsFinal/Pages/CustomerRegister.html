@@ -30,23 +30,7 @@
                 document.getElementById("navbar-nav2").innerHTML += line;
             }
 
-            $("#clear").click(clearLocal);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //$("#clear").click(clearLocal);
 
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
@@ -197,19 +181,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav"  id="navbar-nav2">
-
                     <li class="nav-item">
                         <a class="nav-link active" href="Preferences.html">Preferences</a>
-                    </li>
-                    <!--<li class="nav-item">
-                        <a class="nav-link active" href="SignIn.html">SignIn</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
-                    </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="Manager.html" tabindex="-1" aria-disabled="true">Managment</a>
@@ -250,16 +223,6 @@
 
             </div>
             
-            <!--<div class="form-group">
-                <label for="price_range">price range:</label>
-                <input type="text" class="form-control" placeholder="Enter your limited price range(1-5)" id="PriceRange" pattern="^(?![1-5]{1})" oninvalid="this.setCustomValidity('Please Enter a number from 1-5')" oninput="this.setCustomValidity('')" required >
-
-            </div>-->
-
-
-
-
-            <!--img-->
 
             <div>
                 <label for="files">Files</label>
@@ -267,9 +230,9 @@
             </div>
            <button type="button" id="buttonUpload">UploadFile</button>
             <br /><br />
-
-             <input type="submit"  value="Submit"  id="subbtn">
-
+         
+             <input class="btn btn-block bg-primary" type="submit"  value="Submit"  id="subbtn">
+                
 
         </form>
 
@@ -277,6 +240,6 @@
        
         <div id="ph"></div>
     </div>
-
+    <br /><br /><br />
 </body>
 </html>
