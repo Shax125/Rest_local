@@ -194,7 +194,7 @@
                     str2 += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
                     str2 += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
                     str2 += "</ul>";
-                    str2 += "<input type='button' onclick='UpdateClickCounter(" + data[i].Id+")' id='" + data[i].Id + "' value='Go To Resturant Site'>"
+                    str2 += "<input type='button' class='clickfund' onclick='UpdateClickCounter(" + data[i].Id+")' id='" + data[i].Id + "' value='Go To Resturant Site'>"
                     str2 += "</div>"
                     str2 += "</div>";
                     str2 += "</br>";
@@ -209,17 +209,17 @@
 
         function GetErrorFund(data) {
 
-            alert("Error in Founded without prefernces");
+            console.log("Error in Founded without prefernces");
 
         }
 
         function updateSuccessFunded() {
-            alert("Funded Put success")
+            console.log("Funded Put success")
         }
 
         function updaterrorFunded() {
 
-            alert("Funded Put failed")
+            console.log("Funded Put failed")
         }
 
          // כאן יהיה הגט של הקידום הממומן עם העדפות!!
@@ -237,7 +237,7 @@
 
         function GetSuccessPreferFund(data)
         {
-            alert("success funded")
+            console.log("success funded")
             
             console.log("data of prefer funded");
             console.log(data);
@@ -265,7 +265,7 @@
                 str2 += "<li class='list-group-item'>  <b>Rating:</b> " + data[i].Rating + "</li>"
                 str2 += "<li class='list-group-item'>  <b>PriceRange:</b> " + data[i].PriceRange + "</li>"
                 str2 += "</ul>";
-                str2 += "<input type='button' onclick='UpdateClickCounter(" + data[i].Id + ")' id='" + data[i].Id + "' value='Go To Resturant Site'>"
+                str2 += "<input type='button' class='clickfund' onclick='UpdateClickCounter(" + data[i].Id + ")' id='" + data[i].Id + "' value='Go To Resturant Site'>"
                 str2 += "</div>"
                 str2 += "</div>";
                 str2 += "</br>";
@@ -284,7 +284,7 @@
             }
 
         function GetErrorPreferFund(data)
-        { alert("error in funded"); }
+        { console.log("error in funded"); }
 
             //click counter
 
@@ -295,9 +295,9 @@
 
             }
 
-        function updateSuccessFundedClick(data) { alert("clickCounter of funded not prefer success") }
+        function updateSuccessFundedClick(data) { console.log("clickCounter of funded not prefer success") }
 
-        function updaterrorFundedClick(data) { alert("clickCounter of funded not prefer Fail") }
+        function updaterrorFundedClick(data) { console.log("clickCounter of funded not prefer Fail") }
 
 
     </script>

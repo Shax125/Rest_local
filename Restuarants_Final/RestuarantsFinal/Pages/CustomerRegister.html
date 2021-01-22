@@ -15,6 +15,7 @@
     <link href="Main.css" rel="stylesheet" />
 
     <Script>
+        NewImg = '';
         line = '';
         $(document).ready(function () {
 
@@ -71,10 +72,39 @@
                 });
 
                 return false;
+
+
+                
             });
 
 
+            function showImages(data) {
+                console.log(data);
+                //var NewImg = "";
+                var imgStr = "";
+                // IdImg++;
+                if (Array.isArray(data)) {
 
+                    for (var i = 0; i < data.length; i++) {
+                        imgStr += "<img src='../" + data[i] + "'/>";
+                        NewImg += data[i];
+                    }
+
+                }
+
+                else {
+                    imgStr = "<img src='../" + data + "'/>";
+                    NewImg += data;
+                }
+
+                //f1(NewImg);
+
+            }
+
+
+
+
+           
             $('#pForme').submit(f1);
 
         });
@@ -85,28 +115,7 @@
 
         }
 
-        function showImages(data) {
-            console.log(data);
-            var NewImg = "";
-            var imgStr = "";
-            // IdImg++;
-            if (Array.isArray(data)) {
-
-                for (var i = 0; i < data.length; i++) {
-                    imgStr += "<img src='../" + data[i] + "'/>";
-                    NewImg += data[i];
-                }
-
-            }
-
-            else {
-                imgStr = "<img src='../" + data + "'/>";
-                NewImg += data;
-            }
-
-            f1(NewImg);
-
-        }
+        
 
         function error(data) {
             console.log("Error in UploadFile");
@@ -115,14 +124,19 @@
         }
 
 
-        function f1(NewImg) {
+        function f1() {
+
+            console.log("success:" + NewImg)
             postCustomer2(NewImg);
             return false;
+           
+           
         }
+
 
         // POST ajax call for the form.
         function postCustomer2(NewImg) {
-            console.log("In Post c");
+            console.log("In Post c:" +NewImg);
 
 
 
@@ -236,11 +250,11 @@
 
             </div>
             
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="price_range">price range:</label>
                 <input type="text" class="form-control" placeholder="Enter your limited price range(1-5)" id="PriceRange" pattern="^(?![1-5]{1})" oninvalid="this.setCustomValidity('Please Enter a number from 1-5')" oninput="this.setCustomValidity('')" required >
 
-            </div>
+            </div>-->
 
 
 
@@ -251,10 +265,10 @@
                 <label for="files">Files</label>
                 <input type="file" id="files" name="files" multiple="multiple">
             </div>
-            <button type="button" id="buttonUpload">Submit</button>
+           <button type="button" id="buttonUpload">UploadFile</button>
             <br /><br />
 
-            <!-- <input type="submit" value="Submit" id="subbtn">-->
+             <input type="submit"  value="Submit"  id="subbtn">
 
 
         </form>
