@@ -15,8 +15,37 @@
     <link href="Main.css" rel="stylesheet" />
 
     <Script>
-
+        line = '';
         $(document).ready(function () {
+
+            if (localStorage["customer_Id"] == null) {
+                line += "<li class='nav-item' id='Log'>" + "<a class='nav-link active' href='SignIn.html'>Sign In</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line;
+            }
+
+
+            else {
+                line += "<li class='nav-item' >" + "<a class='nav-link active' onclick='clearLocal()' href='MainPageGuest.html'>Sign Out</a>" + "</li >";
+                document.getElementById("navbar-nav2").innerHTML += line;
+            }
+
+            $("#clear").click(clearLocal);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             $('#buttonUpload').on('click', function () {
                 var data = new FormData();
@@ -50,6 +79,11 @@
 
         });
 
+
+        function clearLocal() {
+            localStorage.clear();
+
+        }
 
         function showImages(data) {
             console.log(data);
@@ -148,18 +182,18 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav"  id="navbar-nav2">
 
                     <li class="nav-item">
                         <a class="nav-link active" href="Preferences.html">Preferences</a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link active" href="SignIn.html">SignIn</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link active" id="clear" href="MainPageGuest.html" tabindex="-1" aria-disabled="true">Sign Out</a>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
                         <a class="nav-link active" id="clear" href="CustomerRegister.html" tabindex="-1" aria-disabled="true">Register</a>
                     </li>
@@ -184,11 +218,13 @@
             </div>
             <div class="form-group">
                 <label for="lname">Last name:</label>
-                <input type="text" class="form-control" placeholder="Enter last name" id="lname" pattern="^[a-zA-Z]{1,20}$" oninvalid="this.setCustomValidity('Please enter only English letters')" oninput="this.setCustomValidity('')" required>
+                <input type="text" class="form-control" placeholder="Enter last name" id="lname" pattern="^[a-zA-Z]{1,20}$"
+                       oninvalid="this.setCustomValidity('Please enter only English letters')"
+                       oninput="this.setCustomValidity('')" required>
             </div>
             <div class="form-group">
                 <label for="email">E-mail:</label>
-                <input type="text" class="form-control" placeholder="Enter email" id="email" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be aaa@email.com')" oninput="this.setCustomValidity('')" required>
+                <input type="text" class="form-control" placeholder="Enter email" id="email" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
             </div>
             <div class="form-group">
                 <label for="phone">Phone:</label>
@@ -202,7 +238,7 @@
             
             <div class="form-group">
                 <label for="price_range">price range:</label>
-                <input type="text" class="form-control" placeholder="Enter your limited price range(1-5)" id="PriceRange" pattern="" oninvalid="" oninput="this.setCustomValidity('')" >
+                <input type="text" class="form-control" placeholder="Enter your limited price range(1-5)" id="PriceRange" pattern="^(?![1-5]{1})" oninvalid="this.setCustomValidity('Please Enter a number from 1-5')" oninput="this.setCustomValidity('')" required >
 
             </div>
 
@@ -224,7 +260,7 @@
         </form>
 
 
-        <div>adam</div>
+       
         <div id="ph"></div>
     </div>
 
