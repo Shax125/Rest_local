@@ -41,6 +41,7 @@
         $(document).on("click", ".deleteBtn", function () {
             //markSelected(this);
             var campaingId = this.getAttribute('data-campaignId');
+            var campaignStatus = this.getAttribute('data-campaignStatus');
             swal({ // this will open a dialouge
                 title: "Are you sure ??",
                 text: "",
@@ -50,7 +51,7 @@
             })
                 .then(function (willDelete) {
                     if (willDelete) {
-                        Deletecampain(campaingId)
+                        Deletecampain(campaingId, campaignStatus)
                     }
                     else swal("Not Deleted!");
                 });
@@ -185,9 +186,10 @@
             ajaxCall("GET", "/api/Campaign", "", getSuccess, error);
         }
 
-        function Deletecampain(id) {
+        function Deletecampain(id, campaignStatus) {
 
-            ajaxCall("PUT", "/api/Campaign/" + id, "", deleteSuccess, deleterror);
+            ajaxCall("PUT", "/api/Campaign?id=" + id + "&status=" + campaignStatus   , "", deleteSuccess, deleterror);
+           
         }
         
         function deleteSuccess(campaindata) {
@@ -213,11 +215,15 @@
                 aoColumns: [
                     {
                         render: function (data, type, row, meta) {
-                            let dataCampaing = "data-campaignId='" + row.Id + "'";
+                            let dataCampaing = "data-campaignId='" + row.Id + "' data-campaignStatus='"+ row.Status+"'";
 
                             editBtn = "<button type='button' class = 'editBtn btn btn-success' " + dataCampaing + "> Edit </button>";
                             viewBtn = "<button type='button' class = 'viewBtn btn btn-info' " + dataCampaing + "> View </button>";
-                            deleteBtn = "<button type='button' class = 'deleteBtn btn btn-danger' " + dataCampaing + "> Delete </button>";
+                            if (row.Status=='Active')
+                                deleteBtn = "<button type='button' class = 'deleteBtn btn btn-danger' " + dataCampaing + "> Delete </button>";
+                            else
+                                deleteBtn = "<button type='button' class = 'deleteBtn btn btn-warning' " + dataCampaing + "> Active Campaign </button>";
+
                             return editBtn + viewBtn + deleteBtn;
                         }
                     },
@@ -246,12 +252,6 @@
                     }
                 ]
             });
-
-
-
-
-
-
 
         }
 

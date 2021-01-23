@@ -224,7 +224,7 @@ namespace RestuarantsFinal.Models.DAL
             {
                 con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
 
-                String selectSTR = " select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants as R inner join Customer_HighLights_2021A_T4 as C on C.idH = R.idH inner join  Restaurants_2021A_T4 as A on R.idR = A.id inner join Customers_2021A_T4 O on O.id=C.idC  where idC =" + id+" and C.status ="+ 1+" and A.category LIKE '%"+ categoryPrefer + "%' and O.price_range>=A.price_range   ";
+                String selectSTR = "select distinct A.id, A.name, A.img, A.rating, A.category, A.address, A.phone, A.price_range from HighlightsInRestaurants as R inner join Customer_HighLights_2021A_T4 as C on C.idH = R.idH inner join  Restaurants_2021A_T4 as A on R.idR = A.id inner join Customers_2021A_T4 O on O.id=C.idC  where idC =" + id+" and C.status ="+ 1 + " and A.category LIKE '%"+ categoryPrefer + "%' and O.price_range>=A.price_range ";
                 SqlCommand cmd = new SqlCommand(selectSTR, con);
 
                 // get a reader
@@ -338,7 +338,7 @@ namespace RestuarantsFinal.Models.DAL
                     c.Viewcounter = Convert.ToInt32(dr["viewCounter"]);
                     c.Status = (string)dr["status"];
                     c.IdR = Convert.ToInt32(dr["idR"]);
-                    if (c.Status == "Active")
+                    //if (c.Status == "Active")
                     cList.Add(c);
 
 
@@ -402,7 +402,7 @@ namespace RestuarantsFinal.Models.DAL
             }
         }
 
-        public int setNotactive(int id)
+        public int setNotactive(int id, string status)
         {
             SqlConnection con;
             SqlCommand cmd;
@@ -417,7 +417,7 @@ namespace RestuarantsFinal.Models.DAL
                 throw (ex);
             }
 
-            String cStr = BuildInsertCommand(id);      // helper method to build the insert string
+            String cStr = BuildInsertCommand6(id, status);      // helper method to build the insert string
 
             cmd = CreateCommand(cStr, con);             // create the command
 
@@ -444,17 +444,15 @@ namespace RestuarantsFinal.Models.DAL
 
         }
 
-        private String BuildInsertCommand(int id) //The second C
+        private String BuildInsertCommand6(int id, string status) //The second C
         {
-            String command;
+           
+            if (status == "Active")
+                 return ("UPDATE Campaign_2021A_T4_1 SET Status = 'NotActive' WHERE id= "+ id);
+            else
+                return ("UPDATE Campaign_2021A_T4_1 SET Status = 'Active' WHERE id= " + id);
 
-            StringBuilder sb = new StringBuilder();
-            // use a string builder to create the dynamic string
-            //sb.AppendFormat("Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", business.Id, business.Name, business.Img, business.Rating, business.Category, business.Address, business.Phone, business.PriceRange);
-            String prefix = "UPDATE Campaign_2021A_T4_1 SET Status = 'NotActive' WHERE id= "+ id;
-            command = prefix;
 
-            return command;
         }
 
         private SqlCommand CreateCommand(String CommandSTR, SqlConnection con)

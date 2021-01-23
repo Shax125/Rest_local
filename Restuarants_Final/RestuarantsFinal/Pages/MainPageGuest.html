@@ -162,7 +162,6 @@
         { 
             var category = $("#category").val();
             ajaxCall("GET", "/api/Business?categoryFund=" + category, "", GetSuccessFund, GetErrorFund);
-            
         }
 
         function GetSuccessFund(data)
@@ -226,8 +225,6 @@
 
         function GetFundPrefer()
         {
-            //alert("Show me the Data");
-            //console.log("data of fund"+data);
             var category = $("#category").val();
             Id = '';
             Id = localStorage["customer_Id"];

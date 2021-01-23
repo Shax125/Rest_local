@@ -49,10 +49,10 @@ namespace RestuarantsFinal.Models
         }
 
 
-        public void setNotactive(int id)
+        public void setNotactive(int id, string status)
         {
             DBService dbs = new DBService();
-            dbs.setNotactive(id);
+            dbs.setNotactive(id, status);
         }
 
         //for update counter view and balance

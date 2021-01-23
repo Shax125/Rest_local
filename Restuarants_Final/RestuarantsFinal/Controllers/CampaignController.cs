@@ -25,11 +25,11 @@ namespace RestuarantsFinal.Controllers
 
 
         // PUT api/<controller>/5
-        public void Put(int id)
+        public void Put(int id, string status)
         {
             Campaign c = new Campaign();
-            c.setNotactive(id);
-
+            c.setNotactive(id, status);
+            
         }
 
 

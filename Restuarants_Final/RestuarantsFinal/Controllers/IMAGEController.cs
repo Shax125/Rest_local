@@ -43,7 +43,6 @@ namespace RestuarantsFinal.Controllers
                         // Save the uploaded file  
                         httpPostedFile.SaveAs(fileSavePath);
                         imageLinks.Add("uploadedFiles/" + id);
-
                     }
                 }
             }
