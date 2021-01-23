@@ -55,7 +55,6 @@ namespace RestuarantsFinal.Models
             dbs.setNotactive(id);
         }
 
-
         //for update counter view and balance
         public void SetViewCounterAndBalance(int id)
         {
