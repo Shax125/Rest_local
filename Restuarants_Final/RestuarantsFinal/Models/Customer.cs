@@ -60,6 +60,14 @@ namespace RestuarantsFinal.Models
         }
 
 
+        public int GetCustId()
+        {
+            DBService dbs = new DBService();
+            int CustId = dbs.GetCustId();
+            return CustId;
+        }
+
+
         public int InsertCust() //he want to enter himself so no need to pass
         {
             DBService dbs = new DBService(); //so we can use the function there

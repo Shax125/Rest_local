@@ -15,9 +15,13 @@
     <link href="Main.css" rel="stylesheet" />
 
     <Script>
-        NewImg = '';
+        
         line = '';
+        NewImg = '';
+        idcust = '';
+        
         $(document).ready(function () {
+           
 
             if (localStorage["customer_Id"] == null) {
                 line += "<li class='nav-item' id='Log'>" + "<a class='nav-link active' href='SignIn.html'>Sign In</a>" + "</li >";
@@ -27,6 +31,10 @@
                 line += "<li class='nav-item' >" + "<a class='nav-link active' onclick='clearLocal()' href='MainPageGuest.html'>Sign Out</a>" + "</li >";
                 document.getElementById("navbar-nav2").innerHTML += line;
             }
+
+            getidcust();
+
+          
 
             //$("#clear").click(clearLocal);
 
@@ -39,7 +47,7 @@
                     for (f = 0; f < files.length; f++) {
                         data.append("UploadedImage", files[f]);
                     }
-                    data.append("id", $('#email').val()); // append what ever data you want to send along with the files. See how you extract it in the controller.
+                    data.append("id", idcust); // append what ever data you want to send along with the files. See how you extract it in the controller.
                 }
 
                 // Ajax upload
@@ -59,15 +67,46 @@
 
 
             function showImages(data) {
+                var imgStr = "";
                 console.log(data);
-                NewImg = data;
+                NewImg = data[0];
                 $("#cb").text("Added successfully");
 
+                
+
+                 if (Array.isArray(data)) {
+
+                     for (var i = 0; i < data.length; i++) {
+                         imgStr += "<img src='../" + data[i] + "'/>";
+                     }
+
+                 }
+
+                 else {
+                     imgStr = "<img src='../" + data + "'/>";
+                 }
+
+               
             }
 
             $('#pForme').submit(f1);
 
         });
+
+        function getidcust() {
+            ajaxCall("GET", "../api/Customer", "", getSuccessId, getErrorId);
+
+
+        }
+
+        function getSuccessId(data) {
+            console.log("success id"+data)
+            idcust = data;
+
+        }
+        function getErrorId(data) {
+            console.log("fail id")
+        }
 
 
         function clearLocal() {
@@ -98,6 +137,7 @@
             console.log("In Post c: " + NewImg);
 
             c1 = {
+               
                 Fname: $('#fname').val(),
                 Lname: $('#lname').val(),
                 Email: $('#email').val(),
@@ -105,13 +145,15 @@
                 Pass:  $('#password').val(),
                 Range: $('#PriceRange2').val(),
                 Img: NewImg
+                
             }
-
+            console.log(c1);
             ajaxCall("POST", "/api/Customer", JSON.stringify(c1), PostSuccess, PostError)
 
         }
 
         function PostSuccess(data) {
+        
             alert("Added Successfuly!", "Great Job", "success");
             console.log(data);
 
@@ -130,7 +172,7 @@
         }
 
         function PostError(err) {
-            alert("error");
+            alert("error about insert a customer");
 
         }
         function updateTextInput(val) {
@@ -168,52 +210,63 @@
 
     <div class="container">
         <br />
-        <div id="fromtobe"><h2>Please enter your details here</h2></div><br />
-        <form id="pForme">
-            <div class="form-group">
-                <label for="fname">First name:</label>
-                <input type="text" class="form-control" placeholder="Enter first name" id="fname" pattern="^[a-zA-Z]{1,10}$" oninvalid="this.setCustomValidity('Please enter only English letters')" oninput="this.setCustomValidity('')" required>
-
-            </div>
-            <div class="form-group">
-                <label for="lname">Last name:</label>
-                <input type="text" class="form-control" placeholder="Enter last name" id="lname" pattern="^[a-zA-Z]{1,20}$"
-                       oninvalid="this.setCustomValidity('Please enter only English letters')"
-                       oninput="this.setCustomValidity('')" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input type="text" class="form-control" placeholder="Enter email" id="email" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone:</label>
-                <input type="text" class="form-control" placeholder="Enter Phone number" id="phone" pattern="^\d{3}-\d{3}-\d{4}$" oninvalid="this.setCustomValidity('Format should be ddd-ddd-dddd')" oninput="this.setCustomValidity('')" required>
-            </div>
-            <div class="form-group">
-                <label for="pass">Password:</label>
-                <input type="text" class="form-control" placeholder="Enter your password" id="password" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$" oninvalid="this.setCustomValidity('Please enter a password with at least 8 characters that include at least one capital letter and one number')" oninput="this.setCustomValidity('')" required>
-
-            </div>
-            <div class="form-group">
-                <label for="customRange2" class="form-label" id="rangevalue">Price range</label>
-                <input type="range" class="form-range" min="1" max="5" id="PriceRange2" onchange="updateTextInput(this.value)";>
-            </div>
-
-            <div>
-                <label for="files">Files</label>
-                <input type="file" id="files" name="files" multiple="multiple">
-            </div>
-           <button type="button" id="buttonUpload">UploadFile</button><p id="cb"></p>
-            <br /><br />
-         
-             <input class="btn btn-block bg-primary" type="submit"  value="Submit"  id="subbtn">
-                
-
-        </form>
+        <div class="row">
+            <div id="reg" class=col-sm-5>
 
 
-       
-        <div id="ph"></div>
+            </div>
+
+            <div class=col-sm-7>
+                <div id="fromtobe"><h2>Please enter your details here</h2></div><br />
+                <form id="pForme">
+                    <div class="form-group">
+                        <label for="fname">First name:</label>
+                        <input type="text" class="form-control" placeholder="Enter first name" id="fname" pattern="^[a-zA-Z]{1,10}$" oninvalid="this.setCustomValidity('Please enter only English letters')" oninput="this.setCustomValidity('')" required>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last name:</label>
+                        <input type="text" class="form-control" placeholder="Enter last name" id="lname" pattern="^[a-zA-Z]{1,20}$"
+                               oninvalid="this.setCustomValidity('Please enter only English letters')"
+                               oninput="this.setCustomValidity('')" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail:</label>
+                        <input type="text" class="form-control" placeholder="Enter email" id="email" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" oninvalid="this.setCustomValidity('Format should be syntax@email.com')" oninput="this.setCustomValidity('')" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" class="form-control" placeholder="Enter Phone number" id="phone" pattern="^\d{3}-\d{3}-\d{4}$" oninvalid="this.setCustomValidity('Format should be ddd-ddd-dddd')" oninput="this.setCustomValidity('')" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Password:</label>
+                        <input type="text" class="form-control" placeholder="Enter your password" id="password" pattern="^(?![0-9a-z]{8})(?![A-Za-z]{8})[0-9a-zA-Z]{8,20}$" oninvalid="this.setCustomValidity('Please enter a password with at least 8 characters that include at least one capital letter and one number')" oninput="this.setCustomValidity('')" required>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="customRange2" class="form-label" id="rangevalue">Price range</label>
+                        <input type="range" class="form-range" min="1" max="5" id="PriceRange2" onchange="updateTextInput(this.value)" ;>
+                    </div>
+
+                    <div>
+                        <label for="files">Files</label>
+                        <input type="file" id="files" name="files" multiple="multiple">
+                    </div>
+                    <button class="btn btn-outline-secondary" type="button" id="buttonUpload">UploadFile</button><p id="cb"></p>
+                    <br /><br />
+
+                    <input style="position:absolute; left:50%;" class="btn btn-primary" type="submit" value="Submit" id="subbtn">
+
+
+                </form>
+
+
+
+                <div id="ph"></div>
+            </div>
+
+
+        </div>
     </div>
     <br /><br /><br />
 </body>

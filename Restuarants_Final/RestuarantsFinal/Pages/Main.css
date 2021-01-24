@@ -55,14 +55,14 @@ button {
     /*border: 5px solid black;*/
 }
 
-/*#MainPrefer {
-    background-image: url('../pics/12.jpg');*/
-    /* background-color:black;*/
-    /*background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;*/
+#MainPrefer {
+    background-image: url('../pics/12.jpg');
+     background-color:black;
+    background-repeat: no-repeat;
+   /* background-attachment: fixed;*/
+    background-size: cover;
     /*border: 5px solid black;*/
-/*}*/
+}
 
 #LBL {
     font: italic;
@@ -71,10 +71,10 @@ button {
     left: 10%;
 }
 #checkIT {
-    width: 350px;
+    width: 25%;
     
     position:relative;
-    top:50%;
+    top:9%;
     left:36%;
  
     /* border:1px solid black; */ 
@@ -144,9 +144,12 @@ button {
     height:30%;
 }*/
 
+
+
 .btn-outline-primary{
     position: relative;
-    left: 34% ;
+    left: 18% ;
+    
 }
 
 img.card-img-top{
@@ -161,9 +164,13 @@ img.card-img-top{
 
 
 
-
-
-
+.container .col-sm-5 {
+    background-image: url('../pics/liodi.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20px;
+    transform: scale(0.9);
+}
 
 
 

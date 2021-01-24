@@ -9,8 +9,12 @@ using System.Web.Configuration;
 
 namespace RestuarantsFinal.Models.DAL
 {
+
+   
     public class DBService
     {
+
+        int idcust;
         public SqlDataAdapter da;
         public DataTable dt;
 
@@ -471,6 +475,55 @@ namespace RestuarantsFinal.Models.DAL
             return cmd;
         }
 
+
+        //get customer id
+
+
+
+        public int GetCustId()
+        {
+
+            SqlConnection con = null;
+
+            try
+            {
+
+                con = connect("Igroup44DB"); // create a connection to the database using the connection String defined in the web config file
+
+                
+
+                String selectSTR = "SELECT TOP 1 * FROM Customers_2021A_T4 ORDER BY id DESC";
+
+
+                SqlCommand cmd = new SqlCommand(selectSTR, con);
+
+              
+                SqlDataReader dr = cmd.ExecuteReader(CommandBehavior.CloseConnection); // CommandBehavior.CloseConnection: the connection will be closed after reading has reached the end
+
+                while (dr.Read())
+                {
+                    idcust = Convert.ToInt32(dr["id"]); 
+                }
+
+                idcust += 1;
+                return idcust; 
+            }
+            catch (Exception)
+            {
+                throw new Exception("Error in DBservice about getting the id from the sql server");
+            }
+            finally
+            {
+                if (con != null)
+                {
+                    con.Close();
+                }
+
+            }
+
+        }
+
+
         public int InsertCustomer(Customer bs)
         {
 
@@ -520,8 +573,8 @@ namespace RestuarantsFinal.Models.DAL
 
             StringBuilder sb = new StringBuilder();
             // use a string builder to create the dynamic string
-            sb.AppendFormat("Values( '{0}', '{1}', '{2}', '{3}','{4}','{5}','{6}')", bs.Fname, bs.Lname, bs.Email, bs.Phone, bs.Pass, bs.Range, bs.Img );
-            String prefix = "INSERT INTO Customers_2021A_T4 " + "( [first_name], [last_name], [email], [phone], [pass_word],[price_range], [photo]) output Inserted.id ";
+            sb.AppendFormat("Values( '{0}', '{1}', '{2}', '{3}','{4}','{5}','{6}' )", bs.Fname, bs.Lname, bs.Email, bs.Phone, bs.Pass, bs.Range, bs.Img );
+            String prefix = "INSERT INTO Customers_2021A_T4 " + "([first_name], [last_name], [email], [phone], [pass_word],[price_range], [photo]) output Inserted.id ";
             command = prefix + sb.ToString();
 
             return command;

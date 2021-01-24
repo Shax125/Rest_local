@@ -18,6 +18,14 @@ namespace RestuarantsFinal.Controllers
             return uList;
         }
 
+        public int GetCustId()
+        {
+            Customer CustId = new Customer();
+
+            return CustId.GetCustId();
+        }
+
+
 
         // POST api/<controller>
         public int Post([FromBody] Customer cust)
