@@ -34,8 +34,6 @@
 
             getidcust();
 
-          
-
             //$("#clear").click(clearLocal);
 
             $('#buttonUpload').on('click', function () {
@@ -47,7 +45,7 @@
                     for (f = 0; f < files.length; f++) {
                         data.append("UploadedImage", files[f]);
                     }
-                    data.append("id", idcust); // append what ever data you want to send along with the files. See how you extract it in the controller.
+                    data.append("id", idcust); //append what ever data you want to send along with the files. See how you extract it in the controller.
                 }
 
                 // Ajax upload
@@ -60,31 +58,16 @@
                     success: showImages,
                     error: error
                 });
-
+                
                 return false;
                 
             });
 
 
             function showImages(data) {
-                var imgStr = "";
                 console.log(data);
                 NewImg = data[0];
                 $("#cb").text("Added successfully");
-
-                
-
-                 if (Array.isArray(data)) {
-
-                     for (var i = 0; i < data.length; i++) {
-                         imgStr += "<img src='../" + data[i] + "'/>";
-                     }
-
-                 }
-
-                 else {
-                     imgStr = "<img src='../" + data + "'/>";
-                 }
 
                
             }
@@ -100,28 +83,24 @@
         }
 
         function getSuccessId(data) {
-            console.log("success id"+data)
+            console.log("success id " + data)
             idcust = data;
-
         }
+
         function getErrorId(data) {
             console.log("fail id")
         }
-
 
         function clearLocal() {
             localStorage.clear();
 
         }
 
-        
-
         function error(data) {
             console.log("Error in UploadFile");
 
 
         }
-
 
         function f1() {
 
@@ -131,8 +110,6 @@
            
         }
 
-
-        // POST ajax call for the form.
         function postCustomer2() {
             console.log("In Post c: " + NewImg);
 
@@ -175,6 +152,7 @@
             alert("error about insert a customer");
 
         }
+
         function updateTextInput(val) {
             $("#rangevalue").text("Price range " + val);
             }
